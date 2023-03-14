@@ -8,7 +8,7 @@ public class TriggerScript : MonoBehaviour
     
     public void OnTriggerEnter(Collider other)
     {
-        if (other.name.Contains("Basketball"))
+        if(other.GetComponent<IsBasketball>() != null)
         {
             eventCamera.GetComponent<UpdateText>().TextChange();
         }

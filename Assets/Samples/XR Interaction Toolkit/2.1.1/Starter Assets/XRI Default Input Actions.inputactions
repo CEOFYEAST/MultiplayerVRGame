@@ -728,6 +728,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Toggle Interface",
+                    "type": "Button",
+                    "id": "d6515da1-e1a4-4c86-b089-b658f74e01fe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -816,6 +825,28 @@
                     "processors": "ScaleVector2(x=0),StickDeadzone",
                     "groups": "Generic XR Controller",
                     "action": "Translate Anchor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "80868771-ced9-462d-aa55-34f03f24519b",
+                    "path": "<OculusTouchController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Toggle Interface",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fbf6cc17-9cae-4aa0-aa6e-2169b492f5e3",
+                    "path": "<OculusTouchController>{RightHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Toggle Interface",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

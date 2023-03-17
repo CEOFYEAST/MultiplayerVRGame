@@ -11,6 +11,24 @@ namespace Com.MyCompany.MyGame
 {
     public class MyGameManager : MonoBehaviourPunCallbacks
     {
+        #region Public Fields 
+
+        // allows me to call any method from a static context
+        // - I can call leave room like "GameManager.Instance.LeaveRoom();" and it will disconnect the local player
+        // initialized as this script in Start
+        public static MyGameManager Instance;
+
+        #endregion
+
+        #region MonoBehaviour callbacks
+
+        void Start()
+        {
+            //instantiates instance of MyGameManager declared in public fields 
+            Instance = this;
+        }
+
+        #endregion
 
         #region Photon Callbacks
 

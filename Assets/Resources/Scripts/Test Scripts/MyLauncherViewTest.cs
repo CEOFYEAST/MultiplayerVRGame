@@ -1,14 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 using Photon.Pun;
 using Photon.Realtime;
 
 namespace Com.MyCompany.MyGame
 {
-    public class MyLauncher : MonoBehaviourPunCallbacks
+    public class MyLauncherViewTest : MonoBehaviourPunCallbacks
     {
+        #region Public Fields
+
+        public GameObject playerPrefab;
+
+        #endregion
+
         //private serializable fields are private fields which are made visible in the inspector via serialization
         // - the default for private fields is to be hidden in the inspector
         #region Private Serializable Fields
@@ -55,6 +58,7 @@ namespace Com.MyCompany.MyGame
         /// </summary>
         void Start()
         {
+            Connect();
         }
 
         #endregion
@@ -133,15 +137,8 @@ namespace Com.MyCompany.MyGame
         {
             Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
 
-            // #Critical: We only load if we are the first player, else we rely on `PhotonNetwork.AutomaticallySyncScene` to sync our instance scene.
-            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-            {
-                Debug.Log("We load the 'Room for 1' ");
-
-                // #Critical
-                // Load the Room Level.
-                PhotonNetwork.LoadLevel("Room for 1");
-            }
+            GameObject toTest = PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
+            Debug.Log("player was instantiated");
         }
 
         #endregion

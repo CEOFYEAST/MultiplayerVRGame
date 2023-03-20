@@ -1,14 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 using Photon.Pun;
 using Photon.Realtime;
 
 namespace Com.MyCompany.MyGame
 {
-    public class MyLauncher : MonoBehaviourPunCallbacks
+    public class MyLauncherPartialInstantiation : MonoBehaviourPunCallbacks
     {
+        #region Public Fields
+
+        public GameObject leftHandPrefab;
+        public GameObject rightHandPrefab;
+
+        public GameObject directLeftHand;
+        public GameObject directRightHand;
+
+        public GameObject originalLeftHand;
+        public GameObject originalRightHand;
+
+        public GameObject localRig;
+
+        #endregion
+
         //private serializable fields are private fields which are made visible in the inspector via serialization
         // - the default for private fields is to be hidden in the inspector
         #region Private Serializable Fields
@@ -55,6 +67,7 @@ namespace Com.MyCompany.MyGame
         /// </summary>
         void Start()
         {
+            Connect();
         }
 
         #endregion
@@ -133,15 +146,35 @@ namespace Com.MyCompany.MyGame
         {
             Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
 
-            // #Critical: We only load if we are the first player, else we rely on `PhotonNetwork.AutomaticallySyncScene` to sync our instance scene.
-            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-            {
-                Debug.Log("We load the 'Room for 1' ");
+            //instantiates player's hand models over the network
+            GameObject leftHand = PhotonNetwork.Instantiate(this.leftHandPrefab.name, new Vector3(0f,0f,0f), Quaternion.identity, 0);
+            GameObject rightHand = PhotonNetwork.Instantiate(this.rightHandPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
 
-                // #Critical
-                // Load the Room Level.
-                PhotonNetwork.LoadLevel("Room for 1");
-            }
+            leftHand.SetActive(false);
+            rightHand.SetActive(false);
+
+            leftHand.transform.position = originalLeftHand.transform.position;
+            leftHand.transform.rotation = originalLeftHand.transform.rotation;
+
+            rightHand.transform.position = originalRightHand.transform.position;
+            rightHand.transform.rotation = originalRightHand.transform.rotation;
+
+            originalLeftHand.SetActive(false);
+            originalRightHand.SetActive(false);
+
+            leftHand.SetActive(true);
+            rightHand.SetActive(true);
+
+            //places player's hand models in the correct position under direct hands in the hierarchy
+            leftHand.transform.parent = directLeftHand.transform;
+            rightHand.transform.parent = directRightHand.transform;
+
+            //assigns hand animators of direct hands
+            directLeftHand.GetComponent<AnimateHandOnInput>().handAnimator = leftHand.GetComponent<Animator>();
+            directRightHand.GetComponent<AnimateHandOnInput>().handAnimator = rightHand.GetComponent<Animator>();
+
+            //enables the scene XR rig 
+            //localRig.SetActive(true);
         }
 
         #endregion

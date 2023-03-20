@@ -10,6 +10,8 @@ public class AnimateHandOnInput : MonoBehaviourPun
 {
     public InputActionProperty pinchAnimationAction;
     public InputActionProperty gripAnimationAction;
+
+    [HideInInspector]
     public Animator handAnimator;
 
     // Start is called before the first frame update

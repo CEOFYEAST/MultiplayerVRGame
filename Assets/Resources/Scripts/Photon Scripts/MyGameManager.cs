@@ -13,13 +13,29 @@ namespace Com.MyCompany.MyGame
     {
         #region Public Fields 
 
+        // objects used for player network instantiation
+        public GameObject leftHandPrefab;
+        public GameObject rightHandPrefab;
+        public GameObject headbandPrefab;
+
+        public GameObject directLeftHand;
+        public GameObject directRightHand;
+
+        public GameObject originalLeftHand;
+        public GameObject originalRightHand;
+        public GameObject originalHeadband;
+
+        public GameObject mainCamera;
+
+        public GameObject localRig;
+
         // allows me to call any method from a static context
         // - I can call leave room like "GameManager.Instance.LeaveRoom();" and it will disconnect the local player
         // initialized as this script in Start
         public static MyGameManager Instance;
 
-        [Tooltip("The prefab to use for representing the player")]
-        public GameObject playerPrefab;
+        //[Tooltip("The prefab to use for representing the player")]
+        //public GameObject playerPrefab;
 
         // I need to call ManagedSyncedInputs from this script 
         //public GameObject SyncedInputManager;
@@ -33,16 +49,52 @@ namespace Com.MyCompany.MyGame
             //instantiates instance of MyGameManager declared in public fields 
             Instance = this;
             
-            //loads the networked XR rig for the player
-            if (playerPrefab == null)
+            //instantiates the networked objects
+            if (localRig == null)
             {
                 Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'",this);
             }
             else
             {
                 Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
+
+                //instantiates player's hand models over the network
+                GameObject leftHand = PhotonNetwork.Instantiate(this.leftHandPrefab.name, new Vector3(0f,0f,0f), Quaternion.identity, 0);
+                GameObject rightHand = PhotonNetwork.Instantiate(this.rightHandPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
+                //instantiates headband over the network
+                GameObject headband = PhotonNetwork.Instantiate(this.headbandPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
+
+                leftHand.SetActive(false);
+                rightHand.SetActive(false);
+                headband.SetActive(false);
+
+                leftHand.transform.position = originalLeftHand.transform.position;
+                leftHand.transform.rotation = originalLeftHand.transform.rotation;
+
+                rightHand.transform.position = originalRightHand.transform.position;
+                rightHand.transform.rotation = originalRightHand.transform.rotation;
+
+                headband.transform.position = originalHeadband.transform.position;
+                headband.transform.rotation = originalHeadband.transform.rotation;
+
+                Destroy(originalLeftHand);
+                Destroy(originalRightHand);
+                Destroy(originalHeadband);
+                
+                headband.SetActive(true);
+
+                //places player's hand models in the correct position under direct hands in the hierarchy
+                leftHand.transform.parent = directLeftHand.transform;
+                rightHand.transform.parent = directRightHand.transform;
+                //places headband in the correct position under main camera in the hierarchy
+                headband.transform.parent = mainCamera.transform;
+
+                //assigns hand animators of direct hands
+                directLeftHand.GetComponent<AnimateHandOnInput>().handAnimator = leftHand.GetComponent<Animator>();
+                directRightHand.GetComponent<AnimateHandOnInput>().handAnimator = rightHand.GetComponent<Animator>();
+
                 // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-                PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
+                //PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
 
                 // manages inputs of all players every time a new player is instantiated
                 // - prevents players from controlling synced objects belonging to other players

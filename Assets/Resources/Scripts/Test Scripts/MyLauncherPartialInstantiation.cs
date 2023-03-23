@@ -10,14 +10,11 @@ namespace Com.MyCompany.MyGame
 
         public GameObject leftHandPrefab;
         public GameObject rightHandPrefab;
-
-        public GameObject directLeftHand;
-        public GameObject directRightHand;
+        public GameObject headbandPrefab;
 
         public GameObject originalLeftHand;
         public GameObject originalRightHand;
-
-        public GameObject localRig;
+        public GameObject originalHeadband;
 
         #endregion
 
@@ -104,6 +101,56 @@ namespace Com.MyCompany.MyGame
 
         #endregion
 
+        #region Private Methods
+
+        public void InstantiatePlayer(){
+            // instantiates player's hand models over the network
+            // - makes sure to set position and rotation of new object to that of object they're replacing in the rig
+            GameObject leftHand = PhotonNetwork.Instantiate(this.leftHandPrefab.name, 
+                originalLeftHand.GetComponent<Transform>().position, 
+                originalLeftHand.GetComponent<Transform>().rotation, 
+                0);
+            GameObject rightHand = PhotonNetwork.Instantiate(this.rightHandPrefab.name, 
+                originalRightHand.GetComponent<Transform>().position, 
+                originalRightHand.GetComponent<Transform>().rotation, 
+                0);
+            //instantiates player headband over the network
+            GameObject headband = PhotonNetwork.Instantiate(this.headbandPrefab.name,
+                originalHeadband.GetComponent<Transform>().position,
+                originalHeadband.GetComponent<Transform>().rotation,
+                0);
+
+            //gets parents of hands
+            GameObject leftHandParent = originalLeftHand.GetComponentInParent<Transform>().parent.gameObject;
+            GameObject rightHandParent = originalRightHand.GetComponentInParent<Transform>().parent.gameObject;
+            //gets parent of headband
+            GameObject headbandParent = originalHeadband.GetComponentInParent<Transform>().parent.gameObject;
+
+            leftHand.SetActive(false);
+            rightHand.SetActive(false);
+            headband.SetActive(false);
+
+            //places player's hand models in the correct position under direct hands in the hierarchy
+            leftHand.transform.parent = leftHandParent.transform;
+            rightHand.transform.parent = rightHandParent.transform;
+            //does the same to headband
+            headband.transform.parent = headbandParent.transform;
+
+            Destroy(originalLeftHand);
+            Destroy(originalRightHand);
+            Destroy(originalHeadband);
+
+            leftHand.SetActive(true);
+            rightHand.SetActive(true);
+            headband.SetActive(true);
+
+            //assigns hand animators of direct hands
+            leftHandParent.GetComponent<AnimateHandOnInput>().handAnimator = leftHand.GetComponent<Animator>();
+            rightHandParent.GetComponent<AnimateHandOnInput>().handAnimator = rightHand.GetComponent<Animator>();
+        }
+
+        #endregion
+
         #region MonoBehaviourPunCallbacks Callbacks
 
         /// <summary>
@@ -146,35 +193,7 @@ namespace Com.MyCompany.MyGame
         {
             Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
 
-            //instantiates player's hand models over the network
-            GameObject leftHand = PhotonNetwork.Instantiate(this.leftHandPrefab.name, originalLeftHand.GetComponent<Transform>().position, Quaternion.identity, 0);
-            GameObject rightHand = PhotonNetwork.Instantiate(this.rightHandPrefab.name, originalRightHand.GetComponent<Transform>().position, Quaternion.identity, 0);
-
-            leftHand.SetActive(false);
-            rightHand.SetActive(false);
-
-            leftHand.transform.position = originalLeftHand.transform.position;
-            leftHand.transform.rotation = originalLeftHand.transform.rotation;
-
-            rightHand.transform.position = originalRightHand.transform.position;
-            rightHand.transform.rotation = originalRightHand.transform.rotation;
-
-            Destroy(originalLeftHand);
-            Destroy(originalRightHand);
-
-            leftHand.SetActive(true);
-            rightHand.SetActive(true);
-
-            //places player's hand models in the correct position under direct hands in the hierarchy
-            leftHand.transform.parent = directLeftHand.transform;
-            rightHand.transform.parent = directRightHand.transform;
-
-            //assigns hand animators of direct hands
-            directLeftHand.GetComponent<AnimateHandOnInput>().handAnimator = leftHand.GetComponent<Animator>();
-            directRightHand.GetComponent<AnimateHandOnInput>().handAnimator = rightHand.GetComponent<Animator>();
-
-            //enables the scene XR rig 
-            //localRig.SetActive(true);
+            InstantiatePlayer();
         }
 
         #endregion

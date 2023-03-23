@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8279166215561583469}
   - component: {fileID: -3699685537289150576}
   m_Layer: 0
-  m_Name: Headband
+  m_Name: Headband  (networked)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -3699685537289150576}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -122,4 +123,4 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_UseLocal: 0

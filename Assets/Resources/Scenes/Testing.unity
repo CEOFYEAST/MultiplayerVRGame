@@ -224,7 +224,7 @@ PrefabInstance:
     - target: {fileID: 5792917509138330961, guid: 0cde110359ca8b042a65de05181f71e7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5792917509138330961, guid: 0cde110359ca8b042a65de05181f71e7,
         type: 3}
@@ -283,33 +283,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0cde110359ca8b042a65de05181f71e7, type: 3}
---- !u!1 &803032952 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5792917509138330967, guid: 0cde110359ca8b042a65de05181f71e7,
-    type: 3}
-  m_PrefabInstance: {fileID: 803032951}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &803032953 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5792917509893916933, guid: 0cde110359ca8b042a65de05181f71e7,
-    type: 3}
-  m_PrefabInstance: {fileID: 803032951}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &803032954 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2201599582789911703, guid: 0cde110359ca8b042a65de05181f71e7,
     type: 3}
   m_PrefabInstance: {fileID: 803032951}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &803032955 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5792917509577498747, guid: 0cde110359ca8b042a65de05181f71e7,
-    type: 3}
-  m_PrefabInstance: {fileID: 803032951}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &803032956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5899813949342384259, guid: 0cde110359ca8b042a65de05181f71e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 803032951}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1101902910 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4150479999064264052, guid: 0cde110359ca8b042a65de05181f71e7,
     type: 3}
   m_PrefabInstance: {fileID: 803032951}
   m_PrefabAsset: {fileID: 0}
@@ -539,7 +527,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &432843004046415614
 GameObject:
@@ -574,9 +562,9 @@ MonoBehaviour:
     type: 3}
   rightHandPrefab: {fileID: 5686134208185362930, guid: 0b14a724d97eda14c82b40eba5f76a19,
     type: 3}
-  directLeftHand: {fileID: 803032953}
-  directRightHand: {fileID: 803032955}
+  headbandPrefab: {fileID: 8255561484709574755, guid: 2e91359f5ab8ed84a93233308c1864b0,
+    type: 3}
   originalLeftHand: {fileID: 803032956}
   originalRightHand: {fileID: 803032954}
-  localRig: {fileID: 803032952}
+  originalHeadband: {fileID: 1101902910}
   maxPlayersPerRoom: 4

@@ -147,8 +147,8 @@ namespace Com.MyCompany.MyGame
             Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
 
             //instantiates player's hand models over the network
-            GameObject leftHand = PhotonNetwork.Instantiate(this.leftHandPrefab.name, new Vector3(0f,0f,0f), Quaternion.identity, 0);
-            GameObject rightHand = PhotonNetwork.Instantiate(this.rightHandPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
+            GameObject leftHand = PhotonNetwork.Instantiate(this.leftHandPrefab.name, originalLeftHand.GetComponent<Transform>().position, Quaternion.identity, 0);
+            GameObject rightHand = PhotonNetwork.Instantiate(this.rightHandPrefab.name, originalRightHand.GetComponent<Transform>().position, Quaternion.identity, 0);
 
             leftHand.SetActive(false);
             rightHand.SetActive(false);

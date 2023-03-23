@@ -159,8 +159,8 @@ namespace Com.MyCompany.MyGame
             rightHand.transform.position = originalRightHand.transform.position;
             rightHand.transform.rotation = originalRightHand.transform.rotation;
 
-            originalLeftHand.SetActive(false);
-            originalRightHand.SetActive(false);
+            Destroy(originalLeftHand);
+            Destroy(originalRightHand);
 
             leftHand.SetActive(true);
             rightHand.SetActive(true);

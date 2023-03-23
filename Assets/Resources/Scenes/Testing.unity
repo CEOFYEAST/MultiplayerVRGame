@@ -209,7 +209,7 @@ MonoBehaviour:
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
   m_CancelButton: Cancel
---- !u!1001 &1744103405
+--- !u!1001 &803032951
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -219,12 +219,7 @@ PrefabInstance:
     - target: {fileID: 3208330848322268061, guid: 0cde110359ca8b042a65de05181f71e7,
         type: 3}
       propertyPath: sceneViewId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4174083901454741114, guid: 0cde110359ca8b042a65de05181f71e7,
-        type: 3}
-      propertyPath: sceneViewId
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5792917509138330961, guid: 0cde110359ca8b042a65de05181f71e7,
         type: 3}
@@ -286,47 +281,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: View Test Origin
       objectReference: {fileID: 0}
-    - target: {fileID: 6122323231434764901, guid: 0cde110359ca8b042a65de05181f71e7,
-        type: 3}
-      propertyPath: sceneViewId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319237889740641610, guid: 0cde110359ca8b042a65de05181f71e7,
-        type: 3}
-      propertyPath: sceneViewId
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0cde110359ca8b042a65de05181f71e7, type: 3}
---- !u!1 &1744103406 stripped
+--- !u!1 &803032952 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5792917509138330967, guid: 0cde110359ca8b042a65de05181f71e7,
     type: 3}
-  m_PrefabInstance: {fileID: 1744103405}
+  m_PrefabInstance: {fileID: 803032951}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1744103407 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2201599582789911703, guid: 0cde110359ca8b042a65de05181f71e7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1744103405}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1744103408 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5792917509577498747, guid: 0cde110359ca8b042a65de05181f71e7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1744103405}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1744103409 stripped
+--- !u!1 &803032953 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5792917509893916933, guid: 0cde110359ca8b042a65de05181f71e7,
     type: 3}
-  m_PrefabInstance: {fileID: 1744103405}
+  m_PrefabInstance: {fileID: 803032951}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1744103410 stripped
+--- !u!1 &803032954 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2201599582789911703, guid: 0cde110359ca8b042a65de05181f71e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 803032951}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &803032955 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5792917509577498747, guid: 0cde110359ca8b042a65de05181f71e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 803032951}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &803032956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5899813949342384259, guid: 0cde110359ca8b042a65de05181f71e7,
     type: 3}
-  m_PrefabInstance: {fileID: 1744103405}
+  m_PrefabInstance: {fileID: 803032951}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1819796235
 GameObject:
@@ -589,9 +574,9 @@ MonoBehaviour:
     type: 3}
   rightHandPrefab: {fileID: 5686134208185362930, guid: 0b14a724d97eda14c82b40eba5f76a19,
     type: 3}
-  directLeftHand: {fileID: 1744103409}
-  directRightHand: {fileID: 1744103408}
-  originalLeftHand: {fileID: 1744103410}
-  originalRightHand: {fileID: 1744103407}
-  localRig: {fileID: 1744103406}
+  directLeftHand: {fileID: 803032953}
+  directRightHand: {fileID: 803032955}
+  originalLeftHand: {fileID: 803032956}
+  originalRightHand: {fileID: 803032954}
+  localRig: {fileID: 803032952}
   maxPlayersPerRoom: 4

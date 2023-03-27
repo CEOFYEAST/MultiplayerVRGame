@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 using Photon.Pun;
 using Photon.Realtime;
@@ -28,6 +29,11 @@ public class DestroyOnOwnerLeave : MonoBehaviour
     }
 
     private Player GetObjectOwner(){
-        return gameObject.GetComponent<PhotonView>().Owner;
+        try{
+            return gameObject.GetComponent<PhotonView>().Owner;
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 }

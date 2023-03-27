@@ -161,10 +161,10 @@ namespace Com.MyCompany.MyGame
             rightHandParent.GetComponent<AnimateHandOnInput>().handAnimator = rightHand.GetComponent<Animator>();
 
             //instantiates a basketball over the network for testing purposes 
-            GameObject newBall = PhotonNetwork.Instantiate(this.basketballPrefab.name, 
-                new Vector3(0, 0, 0), 
-                Quaternion.identity, 
-                0);
+            //GameObject newBall = PhotonNetwork.Instantiate(this.basketballPrefab.name, 
+            //    new Vector3(0, 0, 0), 
+            //    Quaternion.identity, 
+            //    0);
         }
 
         #endregion

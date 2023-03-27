@@ -44,15 +44,7 @@ public class NetworkedBasketballSpawner : MonoBehaviourPunCallbacks
         if(PhotonNetwork.IsConnected){
             yield return new WaitForSeconds(delay);
 
-            Player masterClient = null;
-
-            foreach(var player in PhotonNetwork.PlayerList){
-                if(player.IsMasterClient){
-                    masterClient = player;
-                }
-            }
-
-            if(PhotonNetwork.LocalPlayer == masterClient){
+            if(PhotonNetwork.IsMasterClient){
                 GameObject newBall = PhotonNetwork.Instantiate(this.basketballPrefab.name, 
                     gameObject.GetComponent<Transform>().position, 
                     Quaternion.identity, 

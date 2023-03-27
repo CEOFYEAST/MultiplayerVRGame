@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -15,6 +17,11 @@ namespace Com.MyCompany.MyGame
         public GameObject originalLeftHand;
         public GameObject originalRightHand;
         public GameObject originalHeadband;
+
+        public GameObject localRig;
+
+        [Tooltip("for testing takeover")]
+        public GameObject basketballPrefab;
 
         #endregion
 
@@ -144,9 +151,20 @@ namespace Com.MyCompany.MyGame
             rightHand.SetActive(true);
             headband.SetActive(true);
 
+            //makes sure the listed GameObjects are destroyed when their owner leaves the room
+            //DestroyOnOwnerLeave leftHandDestroy = leftHand.AddComponent(typeof(DestroyOnOwnerLeave)) as DestroyOnOwnerLeave;
+            //DestroyOnOwnerLeave rightHandDestroy = rightHand.AddComponent(typeof(DestroyOnOwnerLeave)) as DestroyOnOwnerLeave;
+            //DestroyOnOwnerLeave headbandDestroy = headband.AddComponent(typeof(DestroyOnOwnerLeave)) as DestroyOnOwnerLeave;
+
             //assigns hand animators of direct hands
             leftHandParent.GetComponent<AnimateHandOnInput>().handAnimator = leftHand.GetComponent<Animator>();
             rightHandParent.GetComponent<AnimateHandOnInput>().handAnimator = rightHand.GetComponent<Animator>();
+
+            //instantiates a basketball over the network for testing purposes 
+            GameObject newBall = PhotonNetwork.Instantiate(this.basketballPrefab.name, 
+                new Vector3(0, 0, 0), 
+                Quaternion.identity, 
+                0);
         }
 
         #endregion
@@ -185,7 +203,7 @@ namespace Com.MyCompany.MyGame
 
             // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
                 //the max players count is set using the private serialized maxPlayersPerRoom variable initialized in the inspector
-            PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
+            PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom, CleanupCacheOnLeave = false });
         }
 
         //called if JoinRandomRoom succeeds
@@ -195,6 +213,59 @@ namespace Com.MyCompany.MyGame
 
             InstantiatePlayer();
         }
+
+        //called when local player leaves room
+        public override void OnLeftRoom()
+        {
+            PhotonNetwork.Destroy(localRig);
+        }
+
+        /**
+        public override void OnPlayerLeftRoom(Player other)
+        {    
+            //meant to delete all objects belonging to the player that's leaving, besides basketballs instantiated by them
+            if(PhotonNetwork.IsMasterClient){
+                //gets every photon view in the scene
+                PhotonView[] views = GameObject.FindObjectsOfType<PhotonView>();
+
+                //checks every photonview to see if its owner is the player that left and destroys it if it is
+                foreach(PhotonView view in views){
+                    GameObject viewParent  = null;
+                    
+                    viewParent = view.GetComponentInParent<Transform>().parent.gameObject;
+
+                    if(viewParent.GetComponent<IsBasketball>() == null){
+                        if(view.Owner == other){
+                            //destroys the parent of the view
+                            PhotonNetwork.Destroy(viewParent);
+                        }
+                    }
+                    
+                    try {
+                        viewParent = view.GetComponentInParent<Transform>().parent.gameObject;
+
+                        //makes sure the parent of the view isn't a basketball
+                        try {
+                            IsBasketball component = viewParent.GetComponent<IsBasketball>();
+                            Debug.Log("basketball status: " + component);
+                        }
+                        catch (Exception e) {
+                            Debug.Log("Inner block called");
+
+                            if(view.Owner == other){
+                                //destroys the parent of the view
+                                PhotonNetwork.Destroy(viewParent);
+                            }
+                        }
+                    }
+                    catch (Exception exception) {
+                        Debug.Log("Outer block called");
+                    }
+                    
+                }
+            }
+        }
+        */
 
         #endregion
     }

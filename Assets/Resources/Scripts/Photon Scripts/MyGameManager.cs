@@ -13,32 +13,40 @@ namespace Com.MyCompany.MyGame
     {
         #region Public Fields 
 
-        // objects used for player network instantiation
-        public GameObject leftHandPrefab;
-        public GameObject rightHandPrefab;
-        public GameObject headbandPrefab;
-
-        public GameObject directLeftHand;
-        public GameObject directRightHand;
-
-        public GameObject originalLeftHand;
-        public GameObject originalRightHand;
-        public GameObject originalHeadband;
-
-        public GameObject mainCamera;
-
-        public GameObject localRig;
-
         // allows me to call any method from a static context
         // - I can call leave room like "GameManager.Instance.LeaveRoom();" and it will disconnect the local player
         // initialized as this script in Start
         public static MyGameManager Instance;
+
+        // prefabs of networked objects
+        public GameObject leftHandPrefab;
+        public GameObject rightHandPrefab;
+        public GameObject headbandPrefab;
+        public GameObject basketballRackPrefab;
+
+        // original objects for the new networked objects to replace in the hierarchy 
+        public GameObject originalLeftHand;
+        public GameObject originalRightHand;
+        public GameObject originalHeadband;
+
+        public GameObject localRig;
 
         //[Tooltip("The prefab to use for representing the player")]
         //public GameObject playerPrefab;
 
         // I need to call ManagedSyncedInputs from this script 
         //public GameObject SyncedInputManager;
+
+        #endregion
+        
+        #region Private Fields
+
+        // positions to place players around the world
+        Vector3[] positions = new [] 
+        {
+            new Vector3(-3.4f, 0.75f, 3.0f),
+            new Vector3(-3.4f, 0.75f, -3.0f)
+        };
 
         #endregion
 
@@ -58,40 +66,7 @@ namespace Com.MyCompany.MyGame
             {
                 Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
 
-                //instantiates player's hand models over the network
-                GameObject leftHand = PhotonNetwork.Instantiate(this.leftHandPrefab.name, new Vector3(0f,0f,0f), Quaternion.identity, 0);
-                GameObject rightHand = PhotonNetwork.Instantiate(this.rightHandPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
-                //instantiates headband over the network
-                GameObject headband = PhotonNetwork.Instantiate(this.headbandPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
-
-                leftHand.SetActive(false);
-                rightHand.SetActive(false);
-                headband.SetActive(false);
-
-                leftHand.transform.position = originalLeftHand.transform.position;
-                leftHand.transform.rotation = originalLeftHand.transform.rotation;
-
-                rightHand.transform.position = originalRightHand.transform.position;
-                rightHand.transform.rotation = originalRightHand.transform.rotation;
-
-                headband.transform.position = originalHeadband.transform.position;
-                headband.transform.rotation = originalHeadband.transform.rotation;
-
-                Destroy(originalLeftHand);
-                Destroy(originalRightHand);
-                Destroy(originalHeadband);
-                
-                headband.SetActive(true);
-
-                //places player's hand models in the correct position under direct hands in the hierarchy
-                leftHand.transform.parent = directLeftHand.transform;
-                rightHand.transform.parent = directRightHand.transform;
-                //places headband in the correct position under main camera in the hierarchy
-                headband.transform.parent = mainCamera.transform;
-
-                //assigns hand animators of direct hands
-                directLeftHand.GetComponent<AnimateHandOnInput>().handAnimator = leftHand.GetComponent<Animator>();
-                directRightHand.GetComponent<AnimateHandOnInput>().handAnimator = rightHand.GetComponent<Animator>();
+                InstantiatePlayer();
 
                 // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
                 //PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
@@ -147,6 +122,54 @@ namespace Com.MyCompany.MyGame
             PhotonNetwork.LeaveRoom();
         }
 
+        public void InstantiatePlayer(){
+            // instantiates player's hand models over the network
+            // - makes sure to set position and rotation of new object to that of object they're replacing in the rig
+            GameObject leftHand = PhotonNetwork.Instantiate(this.leftHandPrefab.name, 
+                originalLeftHand.GetComponent<Transform>().position, 
+                originalLeftHand.GetComponent<Transform>().rotation, 
+                0);
+            GameObject rightHand = PhotonNetwork.Instantiate(this.rightHandPrefab.name, 
+                originalRightHand.GetComponent<Transform>().position, 
+                originalRightHand.GetComponent<Transform>().rotation, 
+                0);
+            //instantiates player headband over the network
+            GameObject headband = PhotonNetwork.Instantiate(this.headbandPrefab.name,
+                originalHeadband.GetComponent<Transform>().position,
+                originalHeadband.GetComponent<Transform>().rotation,
+                0);
+
+            //gets parents of hands
+            GameObject leftHandParent = originalLeftHand.GetComponentInParent<Transform>().parent.gameObject;
+            GameObject rightHandParent = originalRightHand.GetComponentInParent<Transform>().parent.gameObject;
+            //gets parent of headband
+            GameObject headbandParent = originalHeadband.GetComponentInParent<Transform>().parent.gameObject;
+
+            leftHand.SetActive(false);
+            rightHand.SetActive(false);
+            headband.SetActive(false);
+
+            //places player's hand models in the correct position under direct hands in the hierarchy
+            leftHand.transform.parent = leftHandParent.transform;
+            rightHand.transform.parent = rightHandParent.transform;
+            //does the same to headband
+            headband.transform.parent = headbandParent.transform;
+
+            Destroy(originalLeftHand);
+            Destroy(originalRightHand);
+            Destroy(originalHeadband);
+
+            headband.SetActive(true);
+
+            //assigns hand animators of direct hands
+            leftHandParent.GetComponent<AnimateHandOnInput>().handAnimator = leftHand.GetComponent<Animator>();
+            rightHandParent.GetComponent<AnimateHandOnInput>().handAnimator = rightHand.GetComponent<Animator>();
+
+            MovePlayer();
+
+            SpawnRack();
+        }
+
         #endregion
 
         #region Private Methods
@@ -164,6 +187,50 @@ namespace Com.MyCompany.MyGame
 
             //loads the level by name, accounting for player count 
             PhotonNetwork.LoadLevel("Room for " + PhotonNetwork.CurrentRoom.PlayerCount);
+        }
+
+        /// <summary>
+        /// moves the player to a position on the three point line based on their index in playerlist
+        /// - makes sure every player ends up at a different spot
+        /// <summary>
+        private void MovePlayer(){
+            //sets i to the local player's index in player list
+            int i = 0;
+            foreach(Player player in PhotonNetwork.PlayerList){
+                if(player == PhotonNetwork.LocalPlayer){
+                    break;
+                }
+                i++;
+            }
+
+            //gets the transform of the local xr rig
+            //Transform playerTransform = GameObject.FindObjectOfType<Unity.XR.CoreUtils.XROrigin>().GetComponentInParent<Transform>();
+
+            //gets the local xr rig
+            //GameObject localRig = playerTransform.parent.gameObject;
+
+            Debug.Log("New Position: " + positions[i]);
+
+            //sets the local rig's position to the Vector3 at i in positions
+            localRig.GetComponent<Transform>().position = positions[i];
+        }
+
+        /// <summary>
+        /// spawns a ball rack over the network next to the player
+        /// <summary>
+        private void SpawnRack(){
+            //gets the transform of the local xr rig
+            //Vector3 playerPosition = GameObject.FindObjectOfType<Unity.XR.CoreUtils.XROrigin>().GetComponentInParent<Transform>().position;
+            Vector3 playerPosition = localRig.GetComponent<Transform>().position;
+
+            //sets the rack's soon to be position to the right of the local player's position
+            playerPosition.z -= 1f;
+
+            //instantiates a basketball rig to the right of the local player over the network
+            GameObject basketballRack = PhotonNetwork.Instantiate(this.basketballRackPrefab.name, 
+                playerPosition, 
+                Quaternion.identity, 
+                0);
         }
 
         #endregion

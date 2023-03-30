@@ -44,7 +44,9 @@ public class Loaded : MonoBehaviour
         // All parents and children are fully loaded in at this point
         Debug.Log("GameObject " + go.name + " and all of its parents and children are fully loaded in.");
 
+        
+
         // checks if the newly loaded rig belongs to the local player and disables all components on it if it doesn't
-        GameObject.FindObjectOfType<MyInputManagerViewTest>().DisableComponentsInNonLocalRig(gameObject);
+        //GameObject.FindObjectOfType<MyInputManagerViewTest>().DisableComponentsInNonLocalRig(gameObject);
     }
 }

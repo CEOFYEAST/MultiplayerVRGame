@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 2583682235268333756}
   - component: {fileID: 8279166215561583469}
   - component: {fileID: -3699685537289150576}
+  - component: {fileID: -426576317896967089}
   m_Layer: 0
-  m_Name: Headband  (networked)
+  m_Name: Headband  (networked) (destroy on leave)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,3 +125,15 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 0
+--- !u!114 &-426576317896967089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8255561484709574755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85ee710636b754740b995bc77ebdae5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

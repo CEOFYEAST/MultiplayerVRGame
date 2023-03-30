@@ -638,11 +638,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619ea4242403ff749ba3ecc7cd4c5745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHandPrefab: {fileID: 109434732395284509, guid: 37ddb1b8594d39542978b75c88804346,
+  leftHandPrefab: {fileID: 109434732395284509, guid: cfbaee27547dfc443bf483ec487c10d0,
     type: 3}
-  rightHandPrefab: {fileID: 5686134208185362930, guid: 0b14a724d97eda14c82b40eba5f76a19,
+  rightHandPrefab: {fileID: 5686134208185362930, guid: abf711f48eb95c54287b603c79d58c5c,
     type: 3}
-  headbandPrefab: {fileID: 8255561484709574755, guid: 2e91359f5ab8ed84a93233308c1864b0,
+  headbandPrefab: {fileID: 8255561484709574755, guid: bf7b82de7b7cf1748af9a36e00457716,
     type: 3}
   originalLeftHand: {fileID: 803032956}
   originalRightHand: {fileID: 803032954}

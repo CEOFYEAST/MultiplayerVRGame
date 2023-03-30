@@ -8,7 +8,6 @@ public class ToggleInterfaceOnButtonPress : MonoBehaviour
 {
     public InputActionProperty righthandInterfaceToggle;
 
-    private float toggleValue;
     private float lastToggleValue;
 
     void Start()
@@ -19,7 +18,7 @@ public class ToggleInterfaceOnButtonPress : MonoBehaviour
     void Update()
     {
         //reads value from right hand primary and secondary buttons. 1 means pressed and 0 means not unpressed.
-        toggleValue = righthandInterfaceToggle.action.ReadValue<float>();
+        float toggleValue = righthandInterfaceToggle.action.ReadValue<float>();
 
         //toggles interface/controllers once upon button press. lastToggleValue is implemented to prevent toggle every frame
         if(toggleValue == 1 && lastToggleValue != 1){

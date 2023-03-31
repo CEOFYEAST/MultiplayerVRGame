@@ -19,15 +19,8 @@ namespace Com.MyCompany.MyGame
         public static MyGameManager Instance;
 
         // prefabs of networked objects
-        public GameObject leftHandPrefab;
-        public GameObject rightHandPrefab;
         public GameObject headbandPrefab;
         public GameObject basketballRackPrefab;
-
-        // original objects for the new networked objects to replace in the hierarchy 
-        public GameObject originalLeftHand;
-        public GameObject originalRightHand;
-        public GameObject originalHeadband;
 
         public GameObject localRig;
 
@@ -46,6 +39,12 @@ namespace Com.MyCompany.MyGame
         {
             new Vector3(-3.4f, 0.75f, 3.0f),
             new Vector3(-3.4f, 0.75f, -3.0f)
+        };
+
+        String[] handColors = new []
+        {
+            "",
+            "Green "
         };
 
         #endregion
@@ -123,13 +122,22 @@ namespace Com.MyCompany.MyGame
         }
 
         public void InstantiatePlayer(){
+            // original objects for the new networked objects to replace in the hierarchy 
+            GameObject originalLeftHand = GameObject.Find("Left Hand Model");
+            GameObject originalRightHand = GameObject.Find("Right Hand Model");
+            GameObject originalHeadband = GameObject.Find("Headband");
+
+            // sets names of prefabs to be instantiated, accounting for color
+            String leftHandPrefabName = "Left Hand Model " + handColors[GetPlayerIndex()] + "(networked)";
+            String rightHandPrefabName = "Right Hand Model " + handColors[GetPlayerIndex()] + "(networked)";
+
             // instantiates player's hand models over the network
             // - makes sure to set position and rotation of new object to that of object they're replacing in the rig
-            GameObject leftHand = PhotonNetwork.Instantiate(this.leftHandPrefab.name, 
+            GameObject leftHand = PhotonNetwork.Instantiate(leftHandPrefabName, 
                 originalLeftHand.GetComponent<Transform>().position, 
                 originalLeftHand.GetComponent<Transform>().rotation, 
                 0);
-            GameObject rightHand = PhotonNetwork.Instantiate(this.rightHandPrefab.name, 
+            GameObject rightHand = PhotonNetwork.Instantiate(rightHandPrefabName, 
                 originalRightHand.GetComponent<Transform>().position, 
                 originalRightHand.GetComponent<Transform>().rotation, 
                 0);
@@ -155,6 +163,7 @@ namespace Com.MyCompany.MyGame
             //does the same to headband
             headband.transform.parent = headbandParent.transform;
 
+            // destroys originals
             Destroy(originalLeftHand);
             Destroy(originalRightHand);
             Destroy(originalHeadband);
@@ -194,25 +203,8 @@ namespace Com.MyCompany.MyGame
         /// - makes sure every player ends up at a different spot
         /// <summary>
         private void MovePlayer(){
-            //sets i to the local player's index in player list
-            int i = 0;
-            foreach(Player player in PhotonNetwork.PlayerList){
-                if(player == PhotonNetwork.LocalPlayer){
-                    break;
-                }
-                i++;
-            }
-
-            //gets the transform of the local xr rig
-            //Transform playerTransform = GameObject.FindObjectOfType<Unity.XR.CoreUtils.XROrigin>().GetComponentInParent<Transform>();
-
-            //gets the local xr rig
-            //GameObject localRig = playerTransform.parent.gameObject;
-
-            Debug.Log("New Position: " + positions[i]);
-
             //sets the local rig's position to the Vector3 at i in positions
-            localRig.GetComponent<Transform>().position = positions[i];
+            localRig.GetComponent<Transform>().position = positions[GetPlayerIndex()];
         }
 
         /// <summary>
@@ -231,6 +223,21 @@ namespace Com.MyCompany.MyGame
                 playerPosition, 
                 Quaternion.identity, 
                 0);
+        }
+
+        /// <summary>
+        /// returns local player's index in player list
+        /// <summary>
+        private int GetPlayerIndex(){
+            //sets i to the local player's index in player list
+            int i = 0;
+            foreach(Player player in PhotonNetwork.PlayerList){
+                if(player == PhotonNetwork.LocalPlayer){
+                    break;
+                }
+                i++;
+            }
+            return i;
         }
 
         #endregion

@@ -111,9 +111,11 @@ namespace Com.MyCompany.MyGame
         #region Private Methods
 
         public void InstantiatePlayer(){
+            String leftHandPrefabName = "Left Hand Model (networked)";
+
             // instantiates player's hand models over the network
             // - makes sure to set position and rotation of new object to that of object they're replacing in the rig
-            GameObject leftHand = PhotonNetwork.Instantiate(this.leftHandPrefab.name, 
+            GameObject leftHand = PhotonNetwork.Instantiate(leftHandPrefabName, 
                 originalLeftHand.GetComponent<Transform>().position, 
                 originalLeftHand.GetComponent<Transform>().rotation, 
                 0);

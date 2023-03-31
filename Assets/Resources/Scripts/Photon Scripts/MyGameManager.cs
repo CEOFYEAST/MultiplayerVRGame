@@ -19,7 +19,6 @@ namespace Com.MyCompany.MyGame
         public static MyGameManager Instance;
 
         // prefabs of networked objects
-        public GameObject headbandPrefab;
         public GameObject basketballRackPrefab;
 
         public GameObject localRig;
@@ -41,9 +40,9 @@ namespace Com.MyCompany.MyGame
             new Vector3(-3.4f, 0.75f, -3.0f)
         };
 
-        String[] handColors = new []
+        String[] playerColors = new []
         {
-            "",
+            "Blue ",
             "Green "
         };
 
@@ -127,9 +126,13 @@ namespace Com.MyCompany.MyGame
             GameObject originalRightHand = GameObject.Find("Right Hand Model");
             GameObject originalHeadband = GameObject.Find("Headband");
 
+            //sets player color based on their position in the playerlist
+            String playerColor = playerColors[GetPlayerIndex()];
+
             // sets names of prefabs to be instantiated, accounting for color
-            String leftHandPrefabName = "Left Hand Model " + handColors[GetPlayerIndex()] + "(networked)";
-            String rightHandPrefabName = "Right Hand Model " + handColors[GetPlayerIndex()] + "(networked)";
+            String leftHandPrefabName = "Left Hand Model " + playerColor + "(networked)";
+            String rightHandPrefabName = "Right Hand Model " + playerColor + "(networked)";
+            String headbandPrefabName = "Headband " + playerColor + "(networked)";
 
             // instantiates player's hand models over the network
             // - makes sure to set position and rotation of new object to that of object they're replacing in the rig
@@ -142,7 +145,7 @@ namespace Com.MyCompany.MyGame
                 originalRightHand.GetComponent<Transform>().rotation, 
                 0);
             //instantiates player headband over the network
-            GameObject headband = PhotonNetwork.Instantiate(this.headbandPrefab.name,
+            GameObject headband = PhotonNetwork.Instantiate(headbandPrefabName,
                 originalHeadband.GetComponent<Transform>().position,
                 originalHeadband.GetComponent<Transform>().rotation,
                 0);
@@ -174,8 +177,10 @@ namespace Com.MyCompany.MyGame
             leftHandParent.GetComponent<AnimateHandOnInput>().handAnimator = leftHand.GetComponent<Animator>();
             rightHandParent.GetComponent<AnimateHandOnInput>().handAnimator = rightHand.GetComponent<Animator>();
 
+            //moves player to correct position on the court
             MovePlayer();
 
+            //spawns basketball rack next to the player 
             SpawnRack();
         }
 
@@ -212,13 +217,12 @@ namespace Com.MyCompany.MyGame
         /// <summary>
         private void SpawnRack(){
             //gets the transform of the local xr rig
-            //Vector3 playerPosition = GameObject.FindObjectOfType<Unity.XR.CoreUtils.XROrigin>().GetComponentInParent<Transform>().position;
             Vector3 playerPosition = localRig.GetComponent<Transform>().position;
 
             //sets the rack's soon to be position to the right of the local player's position
             playerPosition.z -= 1f;
 
-            //instantiates a basketball rig to the right of the local player over the network
+            //instantiates a basketball rack to the right of the local player over the network
             GameObject basketballRack = PhotonNetwork.Instantiate(this.basketballRackPrefab.name, 
                 playerPosition, 
                 Quaternion.identity, 

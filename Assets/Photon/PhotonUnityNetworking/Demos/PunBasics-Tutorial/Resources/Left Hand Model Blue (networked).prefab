@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: -6884455845231912702}
   - component: {fileID: 6535804296232683571}
   m_Layer: 0
-  m_Name: Left Hand Model (networked)
+  m_Name: Left Hand Model Blue (networked)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

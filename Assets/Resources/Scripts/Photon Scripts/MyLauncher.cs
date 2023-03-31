@@ -55,6 +55,7 @@ namespace Com.MyCompany.MyGame
         /// </summary>
         void Start()
         {
+            Connect();
         }
 
         #endregion

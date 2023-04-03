@@ -65,13 +65,6 @@ namespace Com.MyCompany.MyGame
                 Debug.LogFormat("We are Instantiating LocalPlayer from {0}", Application.loadedLevelName);
 
                 InstantiatePlayer();
-
-                // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-                //PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
-
-                // manages inputs of all players every time a new player is instantiated
-                // - prevents players from controlling synced objects belonging to other players
-                //SyncedInputManager.ManageSyncedInputs();
             }
         }
 
@@ -94,8 +87,6 @@ namespace Com.MyCompany.MyGame
             if (PhotonNetwork.IsMasterClient)
             {
                 Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-
-                LoadArena();
             }
         }
 
@@ -106,8 +97,6 @@ namespace Com.MyCompany.MyGame
             if (PhotonNetwork.IsMasterClient)
             {
                 Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-
-                LoadArena();
             }
         }
 
@@ -187,21 +176,6 @@ namespace Com.MyCompany.MyGame
         #endregion
 
         #region Private Methods
-
-        //loads a level based on the room's current player count
-        void LoadArena()
-        {
-            //makes sure a level is only being loaded by the master client
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
-                return;
-            }
-            Debug.LogFormat("PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount);
-
-            //loads the level by name, accounting for player count 
-            PhotonNetwork.LoadLevel("Room for " + PhotonNetwork.CurrentRoom.PlayerCount);
-        }
 
         /// <summary>
         /// moves the player to a position on the three point line based on their index in playerlist

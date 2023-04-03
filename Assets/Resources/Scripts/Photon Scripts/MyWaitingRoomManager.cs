@@ -17,7 +17,7 @@ namespace Com.MyCompany.MyGame
         #region Public Fields 
 
         // array containing text fields for player names 
-        public TMPro.TextMeshProUGUI[] playerFields = new TMPro.TextMeshProUGUI[6];
+        public GameObject[] imageBackgrounds = new GameObject[6];
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace Com.MyCompany.MyGame
 
         void Start()
         {
-            UpdateText();
+            UpdatePlayerFields();
         }
 
         #endregion
@@ -44,7 +44,7 @@ namespace Com.MyCompany.MyGame
         {
             Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
 
-            UpdateText();
+            UpdatePlayerFields();
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -56,7 +56,7 @@ namespace Com.MyCompany.MyGame
         {
             Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
 
-            UpdateText();
+            UpdatePlayerFields();
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -92,16 +92,31 @@ namespace Com.MyCompany.MyGame
         /// <summary>
         /// updates player fields to reflect PlayerList
         /// <summary>
-        void UpdateText(){
-            // empties all text fields at start
-            foreach(TMPro.TextMeshProUGUI textItem in playerFields){
-                textItem.text = "";
+        void UpdatePlayerFields(){
+            // clears all text and disables all image backgrounds
+            foreach(GameObject imageBackground in imageBackgrounds){
+                // gets player text item under image background
+                TMPro.TextMeshProUGUI playerText = imageBackground.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+
+                // empties text of playerText
+                playerText.text = "";
+
+                // disables imageBackground
+                imageBackground.SetActive(false);
             }
             
             // goes through player fields, changing them to names of players in PlayerList
             int i = 0;
             foreach(Player player in PhotonNetwork.PlayerList){
-                playerFields[i].text = "Player [" + PhotonNetwork.PlayerList[i].ActorNumber + "]";
+                // enables image background
+                imageBackgrounds[i].SetActive(true);
+
+                // gets player text item under image background
+                TMPro.TextMeshProUGUI playerText = imageBackgrounds[i].transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+
+                // sets text of playerText
+                playerText.text = "Player [" + PhotonNetwork.PlayerList[i].ActorNumber + "]";
+
                 i++;
             }
         }

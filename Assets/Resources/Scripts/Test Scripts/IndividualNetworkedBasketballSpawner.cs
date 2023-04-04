@@ -15,7 +15,7 @@ public class IndividualNetworkedBasketballSpawner : MonoBehaviourPunCallbacks
     public GameObject basketballPrefab;
 
     //fills empty trigger at start
-    public override void OnJoinedRoom()
+    void Start()
     {
         StartCoroutine(SpawnNetworkedBasketballCoroutine(1));
     }
@@ -46,12 +46,13 @@ public class IndividualNetworkedBasketballSpawner : MonoBehaviourPunCallbacks
 
             //makes sure the spawner belongs to the local player
             if(gameObject.GetComponentInParent<PhotonView>().IsMine){
-                if(PhotonNetwork.IsMasterClient){
-                    GameObject newBall = PhotonNetwork.Instantiate(this.basketballPrefab.name, 
-                        gameObject.GetComponent<Transform>().position, 
-                        Quaternion.identity, 
-                        0);
-                }
+                Debug.Log("Is Mine");
+                GameObject newBall = PhotonNetwork.Instantiate(this.basketballPrefab.name, 
+                    gameObject.GetComponent<Transform>().position, 
+                    Quaternion.identity, 
+                    0);
+            } else {
+                Debug.Log("Isn't Mine");
             }
         }
     }

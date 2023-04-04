@@ -33,17 +33,44 @@ namespace Com.MyCompany.MyGame
         
         #region Private Fields
 
+        //Vector3(-3.5,0.75,2.5), rotation 30 degrees
+        //Vector3(-1,0.75,4.75), rotation 60 degrees
+        //Vector3(2.25,0.75,6), rotation 90 degrees
+        //Vector3(-3.5,0.75,-2.5), rotation -30 degrees
+        //Vector3(-1,0.75,-4.75), rotation -60 degrees
+        //Vector3(2.25,0.75,-6), rotation -90 degrees
+
         // positions to place players around the world
         Vector3[] positions = new [] 
         {
-            new Vector3(-3.4f, 0.75f, 3.0f),
-            new Vector3(-3.4f, 0.75f, -3.0f)
+            new Vector3(-3.5f,0.75f,2.5f),
+            new Vector3(-3.5f,0.75f,-2.5f),
+            new Vector3(-1f,0.75f,4.75f),
+            new Vector3(-1f,0.75f,-4.75f),
+            new Vector3(2.25f,0.75f,6f),
+            new Vector3(2.25f,0.75f,-6f)
         };
+
+        /**
+        int[] rotations = new []
+        {
+            0,
+            0,
+            45,
+            -45,
+            90,
+            -90
+        };
+        */
 
         String[] playerColors = new []
         {
             "Blue ",
-            "Green "
+            "Green ",
+            "Orange ",
+            "Purple ",
+            "Red ",
+            "Yellow "
         };
 
         #endregion
@@ -195,6 +222,9 @@ namespace Com.MyCompany.MyGame
 
             //sets the rack's soon to be position to the right of the local player's position
             playerPosition.z -= 1f;
+
+            // Create a quaternion to represent the rotation
+            // Quaternion rotationQuaternion = Quaternion.AngleAxis(rotations[GetPlayerIndex()], Vector3.up);
 
             //instantiates a basketball rack to the right of the local player over the network
             GameObject basketballRack = PhotonNetwork.Instantiate(this.basketballRackPrefab.name, 

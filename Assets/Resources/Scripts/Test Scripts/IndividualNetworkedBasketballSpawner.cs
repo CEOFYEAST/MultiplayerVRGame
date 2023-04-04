@@ -46,14 +46,11 @@ public class IndividualNetworkedBasketballSpawner : MonoBehaviourPunCallbacks
 
             //makes sure the spawner belongs to the local player
             if(gameObject.GetComponentInParent<PhotonView>().IsMine){
-                Debug.Log("Is Mine");
                 GameObject newBall = PhotonNetwork.Instantiate(this.basketballPrefab.name, 
                     gameObject.GetComponent<Transform>().position, 
                     Quaternion.identity, 
                     0);
-            } else {
-                Debug.Log("Isn't Mine");
-            }
+            } 
         }
     }
 }

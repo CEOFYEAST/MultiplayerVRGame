@@ -75,7 +75,7 @@ namespace Com.MyCompany.MyGame
 
         public void StartGame(){
             //makes sure a level is only being loaded by the master client and there are atleast two players in the waiting room
-            if (!PhotonNetwork.IsMasterClient || PhotonNetwork.PlayerList.Length < 2)
+            if (!PhotonNetwork.IsMasterClient )//|| PhotonNetwork.PlayerList.Length < 2)
             {
                 return;
             }

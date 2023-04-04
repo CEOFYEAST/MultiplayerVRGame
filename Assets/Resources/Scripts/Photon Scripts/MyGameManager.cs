@@ -33,35 +33,64 @@ namespace Com.MyCompany.MyGame
         
         #region Private Fields
 
-        //Vector3(-3.5,0.75,2.5), rotation 30 degrees
-        //Vector3(-1,0.75,4.75), rotation 60 degrees
-        //Vector3(2.25,0.75,6), rotation 90 degrees
-        //Vector3(-3.5,0.75,-2.5), rotation -30 degrees
-        //Vector3(-1,0.75,-4.75), rotation -60 degrees
-        //Vector3(2.25,0.75,-6), rotation -90 degrees
-
-        // positions to place players around the world
-        Vector3[] positions = new [] 
+        // positions to place players around the scene
+        Vector3[,] playerPositions =
         {
-            new Vector3(-3.5f,0.75f,2.5f),
-            new Vector3(-3.5f,0.75f,-2.5f),
-            new Vector3(-1f,0.75f,4.75f),
-            new Vector3(-1f,0.75f,-4.75f),
-            new Vector3(2.25f,0.75f,6f),
-            new Vector3(2.25f,0.75f,-6f)
+            // even positions 
+            {
+                new Vector3(-4.23999977f,0f,2.93000007f),
+                new Vector3(-4.23999977f,0f,-2.93000007f),
+                new Vector3(-1.42999995f,0f,5.36999989f),
+                new Vector3(-1.42999995f,0f,-5.36999989f),
+                new Vector3(2.07999992f,0f,6.38000011f),
+                new Vector3(2.07999992f,0f,-6.38000011f)
+            },
+            // odd positions
+            {
+                new Vector3(-4.71000004f,0f,0.0399999991f),
+                new Vector3(-3.06999993f,0f,4.36000013f),
+                new Vector3(-3.06999993f,0f,-4.36000013f),
+                new Vector3(0.230000004f,0f,6.09000015f),
+                new Vector3(0.230000004f,0f,-6.09000015f),
+                new Vector3(0f,0f,0f)
+            }
         };
 
-        /**
-        int[] rotations = new []
+        // positions to place racks around the scene
+        Vector3[,] rackPositions =
         {
-            0,
-            0,
-            45,
-            -45,
-            90,
-            -90
+            // even positions
+            {
+                new Vector3(-4.32000017f,0.75f,1.85000002f),
+                new Vector3(-3.29999995f,0.75f,-3.44000006f),
+                new Vector3(-2.08999991f,0.75f,4.63000011f),
+                new Vector3(-0.409999996f,0.75f,-5.51999998f),
+                new Vector3(1.15999997f,0.75f,6f),
+                new Vector3(3.04999995f,0.75f,-6.67000008f)
+            },
+            // odd positions 
+            {
+                new Vector3(-4.28000021f,0.75f,-1.07000005f),
+                new Vector3(-3.43000007f,0.75f,3.46000004f),
+                new Vector3(-2.07999992f,0.75f,-4.76999998f),
+                new Vector3(-0.439999998f,0.75f,5.36999989f),
+                new Vector3(1.16999996f,0.75f,-6.01999998f),
+                new Vector3(0f,0f,0f)
+            }
         };
-        */
+
+        // rotations to apply to racks
+        float[,] rackRotations =
+        {
+            // even rotations
+            { 
+                25.1358223f, 323.608612f, 59.4306564f, 300.569f, 90f, 90f
+            },
+            // odd rotations 
+            { 
+                0f, 46.8230438f, 313.177002f, 65.5279922f, 294.472015f, 0f
+            }
+        };
 
         String[] playerColors = new []
         {
@@ -209,27 +238,34 @@ namespace Com.MyCompany.MyGame
         /// - makes sure every player ends up at a different spot
         /// <summary>
         private void MovePlayer(){
-            //sets the local rig's position to the Vector3 at i in positions
-            localRig.GetComponent<Transform>().position = positions[GetPlayerIndex()];
+            //sets the local rig's position to the Vector3 at i in positions, accounting for length of playerList
+            if(PhotonNetwork.PlayerList.Length % 2 == 0){
+                localRig.GetComponent<Transform>().position = playerPositions[0, GetPlayerIndex()];
+            }
+            else {
+                localRig.GetComponent<Transform>().position = playerPositions[1, GetPlayerIndex()];
+            }
         }
 
         /// <summary>
         /// spawns a ball rack over the network next to the player
         /// <summary>
         private void SpawnRack(){
-            //gets the transform of the local xr rig
-            Vector3 playerPosition = localRig.GetComponent<Transform>().position;
+            Vector3 rackPosition;
+            Quaternion rackRotation;
 
-            //sets the rack's soon to be position to the right of the local player's position
-            playerPosition.z -= 1f;
-
-            // Create a quaternion to represent the rotation
-            // Quaternion rotationQuaternion = Quaternion.AngleAxis(rotations[GetPlayerIndex()], Vector3.up);
+            if(PhotonNetwork.PlayerList.Length % 2 == 0){
+                rackPosition = rackPositions[0, GetPlayerIndex()];
+                rackRotation = Quaternion.AngleAxis(rackRotations[0, GetPlayerIndex()], Vector3.up);
+            } else {
+                rackPosition = rackPositions[1, GetPlayerIndex()];
+                rackRotation = Quaternion.AngleAxis(rackRotations[1, GetPlayerIndex()], Vector3.up);
+            }
 
             //instantiates a basketball rack to the right of the local player over the network
             GameObject basketballRack = PhotonNetwork.Instantiate(this.basketballRackPrefab.name, 
-                playerPosition, 
-                Quaternion.identity, 
+                rackPosition, 
+                rackRotation, 
                 0);
         }
 

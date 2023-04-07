@@ -17,6 +17,7 @@ namespace Com.MyCompany.MyGame
     {
         #region Public Variables
 
+        // text object that is updated by the player to change their username  
         public TMPro.TextMeshProUGUI inputText;
 
         #endregion

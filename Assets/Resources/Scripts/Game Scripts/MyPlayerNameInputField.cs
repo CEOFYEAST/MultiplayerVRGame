@@ -12,7 +12,6 @@ namespace Com.MyCompany.MyGame
     /// <summary>
     /// Player name input field. Let the user input his name, will appear above the player in the game.
     /// </summary>
-    [RequireComponent(typeof(TMPro.TextMeshProUGUI))]
     public class MyPlayerNameInputField : MonoBehaviour
     {
         #region Public Variables
@@ -46,6 +45,8 @@ namespace Com.MyCompany.MyGame
                 }
             }
 
+            Debug.Log("Initialized With: " + defaultName);
+
             PhotonNetwork.NickName =  defaultName;
         }
 
@@ -68,6 +69,8 @@ namespace Com.MyCompany.MyGame
                 return;
             }
             PhotonNetwork.NickName = value;
+
+            Debug.Log("Set To: " + value);
 
             PlayerPrefs.SetString(playerNamePrefKey,value);
         }

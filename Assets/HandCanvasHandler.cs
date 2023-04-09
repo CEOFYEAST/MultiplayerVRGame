@@ -17,4 +17,8 @@ public class HandCanvasHandler : MonoBehaviour
         // Rotate the interface by 180 degrees to fix the backwards text problem
         transform.Rotate(Vector3.up, 180f);
     }
+
+    void OnEnable(){
+        Destroy(gameObject);
+    }
 }

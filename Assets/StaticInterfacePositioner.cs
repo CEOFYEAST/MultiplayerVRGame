@@ -31,9 +31,6 @@ public class StaticInterfacePositioner : MonoBehaviour
             } else {
                 newPosition.y = playerCameraTransform.position.y + 0.5f;
             }
-            
-
-            
 
             // Position and rotate the canvas to be level with the player camera
             transform.position = newPosition;

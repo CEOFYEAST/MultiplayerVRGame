@@ -19,6 +19,7 @@ namespace Com.MyCompany.MyGame
         public static MyGameManager Instance;
 
         // prefabs of networked objects
+        public GameObject usernameDisplayPrefab;
         public GameObject basketballRackPrefab;
 
         public GameObject localRig;
@@ -179,6 +180,10 @@ namespace Com.MyCompany.MyGame
             String rightHandPrefabName = "Right Hand Model " + playerColor + "(networked)";
             String headbandPrefabName = "Headband " + playerColor + "(networked)";
 
+            // sets position of usernameDisplay
+            Vector3 usernameDisplayPosition = originalHeadband.GetComponent<Transform>().position;
+            usernameDisplayPosition.y += 1;
+
             // instantiates player's hand models over the network
             // - makes sure to set position and rotation of new object to that of object they're replacing in the rig
             GameObject leftHand = PhotonNetwork.Instantiate(leftHandPrefabName, 
@@ -189,10 +194,15 @@ namespace Com.MyCompany.MyGame
                 originalRightHand.GetComponent<Transform>().position, 
                 originalRightHand.GetComponent<Transform>().rotation, 
                 0);
-            //instantiates player headband over the network
+            // instantiates player headband over the network
             GameObject headband = PhotonNetwork.Instantiate(headbandPrefabName,
                 originalHeadband.GetComponent<Transform>().position,
                 originalHeadband.GetComponent<Transform>().rotation,
+                0);
+            // instantiates player username display over the network 
+            GameObject usernameDisplay = PhotonNetwork.Instantiate(usernameDisplayPrefab.name,
+                usernameDisplayPosition,
+                Quaternion.identity,
                 0);
 
             //gets parents of hands
@@ -208,8 +218,10 @@ namespace Com.MyCompany.MyGame
             //places player's hand models in the correct position under direct hands in the hierarchy
             leftHand.transform.parent = leftHandParent.transform;
             rightHand.transform.parent = rightHandParent.transform;
-            //does the same to headband
+            //does the same to headband but places it under Main Camera
             headband.transform.parent = headbandParent.transform;
+            //usernameDisplay uses the same parent as headband
+            usernameDisplay.transform.parent = headbandParent.transform;
 
             // destroys originals
             Destroy(originalLeftHand);

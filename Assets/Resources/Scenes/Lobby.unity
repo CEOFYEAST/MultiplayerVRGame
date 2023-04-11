@@ -4332,7 +4332,7 @@ PrefabInstance:
         type: 3}
       propertyPath: initialInterface
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1754020915}
     - target: {fileID: 2183919295101783436, guid: 818b6f22ecbea934eaab7cb35781e91e,
         type: 3}
       propertyPath: connectingInterface

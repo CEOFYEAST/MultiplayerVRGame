@@ -115,7 +115,7 @@ namespace Com.MyCompany.MyGame
                 TMPro.TextMeshProUGUI playerText = imageBackgrounds[i].transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>();
 
                 // sets text of playerText
-                playerText.text = "Player [" + PhotonNetwork.PlayerList[i].ActorNumber + "]";
+                playerText.text = PhotonNetwork.PlayerList[i].NickName;
 
                 i++;
             }

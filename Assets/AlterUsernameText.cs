@@ -27,7 +27,9 @@ public class AlterUsernameText : MonoBehaviour
         string currentUsername = usernameText.text;
 
         // adds toAdd onto usernameText
-        usernameText.text = currentUsername + toAdd.text;
+        if(currentUsername.Length <= 12){
+            usernameText.text = currentUsername + toAdd.text;
+        }
     }
 
     public void Delete(){
@@ -35,7 +37,10 @@ public class AlterUsernameText : MonoBehaviour
         string currentUsername = usernameText.text;
 
         // removes last char in usernameText
-        usernameText.text = currentUsername.Substring(0, currentUsername.Length - 2);
+        if(currentUsername.Length != 0){
+            usernameText.text = currentUsername.Substring(0, currentUsername.Length - 1);
+        }
+        
     }
 
     public void Clear(){

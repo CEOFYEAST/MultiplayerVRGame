@@ -2494,12 +2494,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8468518113393643572, guid: 19019fd1d9c78e043b11fd3d76d3c20a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 19019fd1d9c78e043b11fd3d76d3c20a, type: 3}
---- !u!4 &1714692134 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8468518113393643582, guid: 19019fd1d9c78e043b11fd3d76d3c20a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1714692133}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1714692135 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8468518114345505425, guid: 19019fd1d9c78e043b11fd3d76d3c20a,
@@ -3478,20 +3472,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8370189551524092394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8370189551524092397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28e549f40a368db428c54ce5588d249d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 1714692134}
-  distance: 4
 --- !u!4 &8370189551524092395
 Transform:
   m_ObjectHideFlags: 0
@@ -3500,7 +3480,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8370189551524092397}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -3.52, y: 1.6, z: 0}
+  m_LocalPosition: {x: -1.36, y: 1.32, z: -0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3517,7 +3497,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8370189551524092395}
-  - component: {fileID: 8370189551524092394}
   - component: {fileID: 8370189551524092398}
   m_Layer: 0
   m_Name: Waiting Interface

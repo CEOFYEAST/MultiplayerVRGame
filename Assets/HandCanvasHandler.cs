@@ -8,6 +8,8 @@ public class HandCanvasHandler : MonoBehaviour
     // camera to face
     public Transform playerCamera;
 
+    private int enabledCount = 0;
+
     // Update is called once per frame
     void Update()
     {
@@ -19,6 +21,10 @@ public class HandCanvasHandler : MonoBehaviour
     }
 
     void OnEnable(){
-        Destroy(gameObject);
+        if(enabledCount > 0){
+            Destroy(gameObject);
+        }
+
+        enabledCount += 1;
     }
 }

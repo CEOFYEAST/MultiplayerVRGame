@@ -6,7 +6,7 @@ public class StaticInterfacePositioner : MonoBehaviour
 {
 
     [SerializeField] private Transform playerCameraTransform; // assign the player camera in the Inspector
-    private float distanceFromPlayer = 2.5f; // set the desired distance from the player in the Inspector
+    [SerializeField] private float distanceFromPlayer = 2.5f; // set the desired distance from the player in the Inspector
 
     private void Start()
     {

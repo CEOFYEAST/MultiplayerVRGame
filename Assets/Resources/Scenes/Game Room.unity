@@ -1134,18 +1134,8 @@ PrefabInstance:
     - target: {fileID: 5142944592765169929, guid: 0cde110359ca8b042a65de05181f71e7,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5792917508215163472, guid: 0cde110359ca8b042a65de05181f71e7,
-        type: 3}
-      propertyPath: objectsToToggle.Array.data[0]
-      value: 
-      objectReference: {fileID: 8370189551308293686}
-    - target: {fileID: 5792917508215163472, guid: 0cde110359ca8b042a65de05181f71e7,
-        type: 3}
-      propertyPath: objectsToToggle.Array.data[3]
-      value: 
-      objectReference: {fileID: 1702682261}
     - target: {fileID: 5792917509138330961, guid: 0cde110359ca8b042a65de05181f71e7,
         type: 3}
       propertyPath: m_RootOrder
@@ -5371,6 +5361,48 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 563559713}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1702682262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563559720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd50c13e76156204c98abbc1f71ab4e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToToggle:
+  - {fileID: 8370189551308293686}
+  - {fileID: 563559717}
+  - {fileID: 563559716}
+  - {fileID: 1702682261}
+--- !u!114 &1702682263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563559720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4259ad721064842ab398a9e73110e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  righthandInterfaceToggle:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Righthand Interface Toggle
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 757e5b9f-64f2-49ff-89ad-a0c18f14252a
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -924671270041645836, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
 --- !u!1 &1844190714 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8513859187771203891, guid: ad8542a2e641f1741a30b2e38fbbb724,
@@ -6211,7 +6243,7 @@ PrefabInstance:
     - target: {fileID: 8370189551719086598, guid: 5dc10330cfd70c3459ac6f0b41087291,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8370189552286210064, guid: 5dc10330cfd70c3459ac6f0b41087291,
         type: 3}

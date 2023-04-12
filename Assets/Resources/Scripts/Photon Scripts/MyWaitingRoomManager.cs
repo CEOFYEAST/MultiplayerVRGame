@@ -81,8 +81,12 @@ namespace Com.MyCompany.MyGame
             }
             Debug.LogFormat("PhotonNetwork : Loading Level : Game Room");
 
+            // closes the room to prevent new joiners
+            PhotonNetwork.room.IsOpen = false;
+
             //starts the game
             PhotonNetwork.LoadLevel("Game Room");
+
         }
 
         #endregion

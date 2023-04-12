@@ -14,8 +14,6 @@ GameObject:
   - component: {fileID: 5792917508215163507}
   - component: {fileID: 5792917508215163516}
   - component: {fileID: 5792917508215163458}
-  - component: {fileID: 5792917508215163472}
-  - component: {fileID: 5792917508215163473}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -238,48 +236,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: {fileID: 5792917509893916933}
   rightHand: {fileID: 5792917509577498747}
---- !u!114 &5792917508215163472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5792917508215163510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd50c13e76156204c98abbc1f71ab4e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectsToToggle:
-  - {fileID: 0}
-  - {fileID: 5792917509893916933}
-  - {fileID: 5792917509577498747}
-  - {fileID: 0}
---- !u!114 &5792917508215163473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5792917508215163510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a4259ad721064842ab398a9e73110e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  righthandInterfaceToggle:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Righthand Interface Toggle
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: b6f994c1-ae8a-4538-8c0d-47f1df372202
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: -924671270041645836, guid: c348712bda248c246b8c49b3db54643f,
-      type: 3}
 --- !u!1 &5792917509138330967
 GameObject:
   m_ObjectHideFlags: 0

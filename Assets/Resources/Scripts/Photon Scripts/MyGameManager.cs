@@ -228,6 +228,8 @@ namespace Com.MyCompany.MyGame
             Destroy(originalRightHand);
             Destroy(originalHeadband);
 
+            leftHand.SetActive(true);
+            rightHand.SetActive(true);
             headband.SetActive(true);
 
             //assigns hand animators of direct hands

@@ -35,14 +35,14 @@ namespace Com.MyCompany.MyGame
         /// </summary>
         void Start () {
 
-            string defaultName = string.Empty;
+            string defaultName = "player";
             if (inputText!=null)
             {
                 if (PlayerPrefs.HasKey(playerNamePrefKey))
                 {
                     defaultName = PlayerPrefs.GetString(playerNamePrefKey);
                     inputText.text = defaultName;
-                }
+                } 
             }
 
             Debug.Log("Initialized With: " + defaultName);

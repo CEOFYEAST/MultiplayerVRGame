@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2595872212440800795}
   - component: {fileID: 2595872212440800794}
   - component: {fileID: 2595872212440800789}
-  - component: {fileID: 7598180318269351259}
+  - component: {fileID: 100027143766789473}
   m_Layer: 5
   m_Name: UsernameDisplay (networked)
   m_TagString: Untagged
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_SynchronizeRotation: 0
   m_SynchronizeScale: 0
   m_UseLocal: 0
---- !u!114 &7598180318269351259
+--- !u!114 &100027143766789473
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968c4160460183e49a058a505f8b7911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  usernameDisplayText: {fileID: 2595872212491470803}
 --- !u!1 &2595872212491470637
 GameObject:
   m_ObjectHideFlags: 0

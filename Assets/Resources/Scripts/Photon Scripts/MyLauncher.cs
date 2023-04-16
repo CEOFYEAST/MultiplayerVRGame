@@ -9,6 +9,12 @@ namespace Com.MyCompany.MyGame
 {
     public class MyLauncher : MonoBehaviourPunCallbacks
     {
+        #region Public Fields
+
+        public bool connectOnStart = false;
+
+        #endregion
+
         //private serializable fields are private fields which are made visible in the inspector via serialization
         // - the default for private fields is to be hidden in the inspector
         #region Private Serializable Fields
@@ -55,7 +61,9 @@ namespace Com.MyCompany.MyGame
         /// </summary>
         void Start()
         {
-            Connect();
+            if(connectOnStart == true){
+                Connect();
+            }
         }
 
         #endregion

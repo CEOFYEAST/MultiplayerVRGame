@@ -44,6 +44,13 @@ namespace Com.MyCompany.MyGame
 
         #endregion
 
+        #region Private Constants
+
+        // Store the PlayerPref Key to avoid typos
+        const string regionPrefKey = "RegionPreference";
+
+        #endregion
+
         #region MonoBehaviour CallBacks
 
         /// <summary>
@@ -92,10 +99,24 @@ namespace Com.MyCompany.MyGame
             {
                 Debug.Log("connecting to Photon Online Server");
 
+                // overrides best found region if player has a particular region preference set
+                if(PlayerPrefs.HasKey(regionPrefKey)){
+                    PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = PlayerPrefs.GetString(regionPrefKey);
+                } 
+
                 // #Critical, we must first and foremost connect to Photon Online Server.
                 isConnecting = PhotonNetwork.ConnectUsingSettings();
                 PhotonNetwork.GameVersion = gameVersion;
             }
+        }
+
+        /// <summary>
+        /// stores player region preference in player prefs
+        ///  - preference chosen via menu in lobby interface
+        /// <summary>
+        public void SetPrefferedRegion(string preference){
+            Debug.Log("setting preffered region to: " + preference); 
+            PlayerPrefs.SetString(regionPrefKey,preference);
         }
 
         #endregion
@@ -116,7 +137,6 @@ namespace Com.MyCompany.MyGame
             if (isConnecting)
             {
                 // #Critical: The first we try to do is to join a potential existing room. If there is, good, else, we'll be called back with OnJoinRandomFailed()
-                PhotonNetwork.ConnectToRegion("us"); 
                 PhotonNetwork.JoinRandomRoom();
                 isConnecting = false;
             }

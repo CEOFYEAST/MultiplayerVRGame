@@ -6277,4 +6277,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCameraTransform: {fileID: 1702682260}
-  distanceFromPlayer: 2.5
+  distanceFromPlayer: 2

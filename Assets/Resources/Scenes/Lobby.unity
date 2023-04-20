@@ -9125,7 +9125,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1754020917}
   - component: {fileID: 1754020918}
-  - component: {fileID: 1754020919}
   m_Layer: 0
   m_Name: ' Lobby Interface'
   m_TagString: Untagged
@@ -9166,21 +9165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCameraTransform: {fileID: 372082889}
-  distanceFromPlayer: 2.5
---- !u!114 &1754020919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1754020915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28e549f40a368db428c54ce5588d249d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 372082889}
-  distance: 1.5
+  distanceFromPlayer: 2
 --- !u!1 &1771236626
 GameObject:
   m_ObjectHideFlags: 0

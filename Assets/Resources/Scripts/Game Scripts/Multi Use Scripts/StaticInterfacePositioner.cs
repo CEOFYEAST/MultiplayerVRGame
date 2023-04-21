@@ -25,11 +25,9 @@ public class StaticInterfacePositioner : MonoBehaviour
             // Calculate the new position of the canvas in front of the player camera
             Vector3 newPosition = playerCameraTransform.position + playerCameraTransform.forward * distanceFromPlayer;
 
-            // Sets the height to player camera
-            if(playerCameraTransform.position.y >= 0){
-                newPosition.y = playerCameraTransform.position.y - 0.5f;
-            } else {
-                newPosition.y = playerCameraTransform.position.y + 0.5f;
+            // makes sure the menu never shows up below or partially in the floor
+            if(newPosition.y < .6f){
+                newPosition.y = .6f;
             }
 
             // Position and rotate the canvas to be level with the player camera

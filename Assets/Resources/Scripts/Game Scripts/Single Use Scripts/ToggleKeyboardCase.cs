@@ -21,13 +21,20 @@ public class ToggleKeyboardCase : MonoBehaviour
                 TMPro.TextMeshProUGUI letterText = letterButton.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
 
                 // gets first character in letterText
-                char letter = letterText.text.charAt(0);
+                char letter = letterText.text[0];
 
-                //checks if character is uppercase
-                if(letter.isUper){
-                    
+                // toggles case
+                if(isUppercase){
+                    letter = Char.ToLower(letter);
+                } else {
+                    letter = Char.ToUpper(letter);
                 }
+
+                // sets text to updated string
+                letterText.text = Char.ToString(letter);
             }
         }
+        
+        isUppercase = !(isUppercase);
     }
 }

@@ -27,12 +27,6 @@ public class UsernameRegionDisplaysHandler : MonoBehaviour
         } else {
             regionDisplayText.text = "Best Region";
         }
-
-        if(PlayerPrefs.HasKey(playerNamePrefKey)){
-            usernameDisplayText.text = PlayerPrefs.GetString(playerNamePrefKey);
-        } else {
-            regionDisplayText.text = "Player";
-        }
     }
 
     // Update is called once per frame

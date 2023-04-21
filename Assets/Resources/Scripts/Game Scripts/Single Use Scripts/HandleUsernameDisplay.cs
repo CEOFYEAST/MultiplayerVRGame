@@ -18,7 +18,9 @@ public class HandleUsernameDisplay : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        MainCameraTransform = gameObject.GetComponentInParent<Transform>();
+        MainCameraTransform = GameObject.Find("Main Camera").transform;
+
+        Debug.Log("Main Camera Transform: " + MainCameraTransform);
 
         Player owner = photonView.Owner;
 
@@ -28,10 +30,16 @@ public class HandleUsernameDisplay : MonoBehaviourPun
     // Update is called once per frame
     void LateUpdate()
     {
-        // Make the interface always face the player
-        transform.LookAt(MainCameraTransform);
-
-        // Rotate the interface by 180 degrees to fix the backwards text problem
-        //transform.Rotate(Vector3.up, 180f);
+        // Get the direction to the target
+        Vector3 directionToTarget = MainCameraTransform.position - transform.position;
+            
+        // Calculate the rotation to face the target
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+        
+        // Remove the pitch component of the rotation
+        targetRotation = Quaternion.Euler(0f, targetRotation.eulerAngles.y, 0f);
+        
+        // Apply the rotation to the UI
+        transform.rotation = targetRotation;
     }
 }

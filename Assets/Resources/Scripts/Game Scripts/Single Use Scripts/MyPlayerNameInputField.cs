@@ -48,6 +48,8 @@ namespace Com.MyCompany.MyGame
             Debug.Log("Initialized With: " + defaultName);
 
             PhotonNetwork.NickName =  defaultName;
+
+            PlayerPrefs.SetString(playerNamePrefKey,defaultName);
         }
 
         #endregion

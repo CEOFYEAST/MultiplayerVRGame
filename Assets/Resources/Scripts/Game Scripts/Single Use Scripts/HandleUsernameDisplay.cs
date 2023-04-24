@@ -41,5 +41,8 @@ public class HandleUsernameDisplay : MonoBehaviourPun
         
         // Apply the rotation to the UI
         transform.rotation = targetRotation;
+
+        // Rotate the interface by 180 degrees to fix the backwards text problem
+        transform.Rotate(Vector3.up, 180f);
     }
 }

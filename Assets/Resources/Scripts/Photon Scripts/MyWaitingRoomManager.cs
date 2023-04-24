@@ -17,7 +17,8 @@ namespace Com.MyCompany.MyGame
         #region Public Fields 
 
         // array containing text fields for player names 
-        public GameObject[] imageBackgrounds = new GameObject[6];
+        public GameObject[] masterImageBackgrounds = new GameObject[6];
+        public GameObject[] nonMasterImageBackgrounds = new GameObject[6];
 
         #endregion
 
@@ -25,7 +26,8 @@ namespace Com.MyCompany.MyGame
 
         void Start()
         {
-            UpdatePlayerFields();
+            UpdatePlayerFields(masterImageBackgrounds);
+            UpdatePlayerFields(nonMasterImageBackgrounds);
         }
 
         #endregion
@@ -44,7 +46,8 @@ namespace Com.MyCompany.MyGame
         {
             Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
 
-            UpdatePlayerFields();
+            UpdatePlayerFields(masterImageBackgrounds);
+            UpdatePlayerFields(nonMasterImageBackgrounds);
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -56,7 +59,8 @@ namespace Com.MyCompany.MyGame
         {
             Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
 
-            UpdatePlayerFields();
+            UpdatePlayerFields(masterImageBackgrounds);
+            UpdatePlayerFields(nonMasterImageBackgrounds);
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -96,9 +100,9 @@ namespace Com.MyCompany.MyGame
         /// <summary>
         /// updates player fields to reflect PlayerList
         /// <summary>
-        void UpdatePlayerFields(){
+        void UpdatePlayerFields(GameObject[] chosenImageBackgrounds){
             // clears all text and disables all image backgrounds
-            foreach(GameObject imageBackground in imageBackgrounds){
+            foreach(GameObject imageBackground in chosenImageBackgrounds){
                 // gets player text item under image background
                 TMPro.TextMeshProUGUI playerText = imageBackground.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>();
 
@@ -113,10 +117,10 @@ namespace Com.MyCompany.MyGame
             int i = 0;
             foreach(Player player in PhotonNetwork.PlayerList){
                 // enables image background
-                imageBackgrounds[i].SetActive(true);
+                chosenImageBackgrounds[i].SetActive(true);
 
                 // gets player text item under image background
-                TMPro.TextMeshProUGUI playerText = imageBackgrounds[i].transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+                TMPro.TextMeshProUGUI playerText = chosenImageBackgrounds[i].transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>();
 
                 // sets text of playerText
                 playerText.text = PhotonNetwork.PlayerList[i].NickName;

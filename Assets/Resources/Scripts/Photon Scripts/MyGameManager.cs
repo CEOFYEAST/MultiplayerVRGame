@@ -22,13 +22,8 @@ namespace Com.MyCompany.MyGame
         public GameObject usernameDisplayPrefab;
         public GameObject basketballRackPrefab;
 
+        // local rig
         public GameObject localRig;
-
-        //[Tooltip("The prefab to use for representing the player")]
-        //public GameObject playerPrefab;
-
-        // I need to call ManagedSyncedInputs from this script 
-        //public GameObject SyncedInputManager;
 
         #endregion
         

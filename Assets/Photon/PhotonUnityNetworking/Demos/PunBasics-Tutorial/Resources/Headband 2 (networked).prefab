@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8279166215561583469}
   - component: {fileID: -3699685537289150576}
   m_Layer: 0
-  m_Name: Headband Green (networked)
+  m_Name: Headband 2 (networked)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 328c743cbba6fbc439fefa743e1d1839, type: 2}
+  - {fileID: 2100000, guid: d47fe2446a4c51f41bd890ec2fe4c2dd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

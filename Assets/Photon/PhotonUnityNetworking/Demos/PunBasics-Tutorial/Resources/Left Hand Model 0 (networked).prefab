@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: -6884455845231912702}
   - component: {fileID: 6535804296232683571}
   m_Layer: 0
-  m_Name: Left Hand Model Orange (networked)
+  m_Name: Left Hand Model 0 (networked)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -516,7 +516,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d47fe2446a4c51f41bd890ec2fe4c2dd, type: 2}
+  - {fileID: 2100000, guid: 3637b758ff163493f8bb8b6d7e96d7ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

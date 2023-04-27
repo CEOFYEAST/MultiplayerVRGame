@@ -88,16 +88,13 @@ namespace Com.MyCompany.MyGame
             }
         };
 
-        String[] playerColors = new []
-        {
-            "Blue ",
-            "Green ",
-            "Orange ",
-            "Purple ",
-            "Red ",
-            "Yellow "
-        };
+        #endregion
 
+        #region Private Constants
+
+            // store the team number custom properties key to avoid typos
+            const string teamNumberHashmapKey = "TeamNumber";
+        
         #endregion
 
         #region MonoBehaviour callbacks
@@ -168,12 +165,12 @@ namespace Com.MyCompany.MyGame
             GameObject originalHeadband = GameObject.Find("Headband");
 
             //sets player color based on their position in the playerlist
-            String playerColor = playerColors[GetPlayerIndex()];
+            int playerTeamNumber = (int) PhotonNetwork.LocalPlayer.CustomProperties[teamNumberHashmapKey];
 
             // sets names of prefabs to be instantiated, accounting for color
-            String leftHandPrefabName = "Left Hand Model " + playerColor + "(networked)";
-            String rightHandPrefabName = "Right Hand Model " + playerColor + "(networked)";
-            String headbandPrefabName = "Headband " + playerColor + "(networked)";
+            String leftHandPrefabName = "Left Hand Model " + playerTeamNumber + " (networked)";
+            String rightHandPrefabName = "Right Hand Model " + playerTeamNumber + " (networked)";
+            String headbandPrefabName = "Headband " + playerTeamNumber + " (networked)";
 
             // sets position of usernameDisplay
             Vector3 usernameDisplayPosition = originalHeadband.GetComponent<Transform>().position;

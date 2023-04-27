@@ -25,7 +25,7 @@ namespace Com.MyCompany.MyGame
 
         #region Private Constants
 
-        // Store the PlayerPref Key to avoid typos
+        // store the team number custom properties key to avoid typos
         const string teamNumberHashmapKey = "TeamNumber";
         
         #endregion
@@ -37,9 +37,6 @@ namespace Com.MyCompany.MyGame
             AssignPlayerTeam();
 
             StartCoroutine(Timer());
-
-            UpdatePlayerFields(masterImageBackgrounds);
-            UpdatePlayerFields(nonMasterImageBackgrounds);
         }
 
         #endregion
@@ -61,9 +58,6 @@ namespace Com.MyCompany.MyGame
             AssignPlayerTeam();
 
             StartCoroutine(Timer());
-
-            UpdatePlayerFields(masterImageBackgrounds);
-            UpdatePlayerFields(nonMasterImageBackgrounds);
 
             if (PhotonNetwork.IsMasterClient)
             {

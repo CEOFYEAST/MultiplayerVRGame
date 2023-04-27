@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,10 +23,21 @@ namespace Com.MyCompany.MyGame
 
         #endregion
 
+        #region Private Constants
+
+        // Store the PlayerPref Key to avoid typos
+        const string teamNumberHashmapKey = "TeamNumber";
+        
+        #endregion
+
         #region MonoBehaviour callbacks
 
         void Start()
         {
+            AssignPlayerTeam();
+
+            StartCoroutine(Timer());
+
             UpdatePlayerFields(masterImageBackgrounds);
             UpdatePlayerFields(nonMasterImageBackgrounds);
         }
@@ -46,6 +58,10 @@ namespace Com.MyCompany.MyGame
         {
             Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
 
+            AssignPlayerTeam();
+
+            StartCoroutine(Timer());
+
             UpdatePlayerFields(masterImageBackgrounds);
             UpdatePlayerFields(nonMasterImageBackgrounds);
 
@@ -59,8 +75,9 @@ namespace Com.MyCompany.MyGame
         {
             Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
 
-            UpdatePlayerFields(masterImageBackgrounds);
-            UpdatePlayerFields(nonMasterImageBackgrounds);
+            AssignPlayerTeam();
+
+            StartCoroutine(Timer());
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -90,12 +107,38 @@ namespace Com.MyCompany.MyGame
 
             //starts the game
             PhotonNetwork.LoadLevel("Game Room");
-
         }
 
         #endregion
 
         #region Private Methods
+
+        /// <summary>
+        /// assigns the local player's team and updates their custom properties team hashmap to reflect the change
+        /// <summary>
+        private void AssignPlayerTeam(){
+            // creates a new hashmap to store the player's team number
+            ExitGames.Client.Photon.Hashtable _myCustomProperties = new ExitGames.Client.Photon.Hashtable();
+
+            // grabs the player's index in PlayerList
+            int playerIndex = 0;
+            foreach(Player player in PhotonNetwork.PlayerList){
+                if(player.IsLocal){
+                    break;
+                }
+                playerIndex++;
+            }
+
+            // sets the hashmap (team number) to the player's index in PlayerList
+            _myCustomProperties[teamNumberHashmapKey] = playerIndex;
+
+            // updates the player's custom properties locally 
+            PhotonNetwork.LocalPlayer.CustomProperties = _myCustomProperties;
+
+            // updates the player's custom properties over the network
+            PhotonNetwork.LocalPlayer.SetCustomProperties(_myCustomProperties);
+        }
+
 
         /// <summary>
         /// updates player fields to reflect PlayerList
@@ -113,11 +156,21 @@ namespace Com.MyCompany.MyGame
                 imageBackground.SetActive(false);
             }
             
-            // goes through player fields, changing them to names of players in PlayerList
+            // goes through player fields, changing them to names of players in PlayerList 
+            // and changing the background colors to reflect the teams of players
             int i = 0;
             foreach(Player player in PhotonNetwork.PlayerList){
                 // enables image background
                 chosenImageBackgrounds[i].SetActive(true);
+
+                // grabs team number of player from custom properties
+                int playerTeamNumber = (int) PhotonNetwork.PlayerList[i].CustomProperties[teamNumberHashmapKey];
+
+                // grabs team color of player using team number
+                Color32 playerTeamColor = StaticTeamColors.teamColors[playerTeamNumber];
+
+                // changes color of image background to reflect the player's team
+                chosenImageBackgrounds[i].GetComponent<Image>().color = playerTeamColor;
 
                 // gets player text item under image background
                 TMPro.TextMeshProUGUI playerText = chosenImageBackgrounds[i].transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>();
@@ -127,6 +180,25 @@ namespace Com.MyCompany.MyGame
 
                 i++;
             }
+        }
+
+        #endregion
+
+        #region Private IEnumerators
+
+        /// <summary>
+        /// IEnumerator that makes sure every player has a team selected 
+        /// before player fields are updated
+        /// <summary>
+        private IEnumerator Timer(){
+            //updates every tenth second 
+            for (int i = 9; i >= 0; i--)
+            {
+                yield return new WaitForSeconds(.1f);
+            }
+
+            UpdatePlayerFields(masterImageBackgrounds);
+            UpdatePlayerFields(nonMasterImageBackgrounds);
         }
 
         #endregion

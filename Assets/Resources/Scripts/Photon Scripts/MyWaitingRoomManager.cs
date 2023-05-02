@@ -186,10 +186,14 @@ namespace Com.MyCompany.MyGame
         /// <summary>
         private IEnumerator Timer(){
             //updates every tenth second 
+            /**
             for (int i = 9; i >= 0; i--)
             {
                 yield return new WaitForSeconds(.1f);
             }
+            */
+
+            yield return new WaitForSeconds(.5f);
 
             UpdatePlayerFields(masterImageBackgrounds);
             UpdatePlayerFields(nonMasterImageBackgrounds);

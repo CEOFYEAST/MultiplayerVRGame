@@ -154,7 +154,7 @@ public class MyGameLoop : MonoBehaviour
             GameObject scoringScoreboard = scoreboardContent.transform.GetChild(scorerTeamNumber).gameObject;
 
             // grabs the text child to the scoreboard
-            TMPro.TextMeshProUGUI scoreboardText = scoringScoreboard.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+            TMPro.TextMeshProUGUI scoreboardText = scoringScoreboard.transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>();
 
             // updates the scoreboard's text
             scoreboardText.text = teamScores[scorerTeamNumber].ToString();

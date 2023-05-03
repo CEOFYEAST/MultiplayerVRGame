@@ -4395,12 +4395,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Score Trigger
       objectReference: {fileID: 0}
+    - target: {fileID: 7404464739333907653, guid: 2d316093d65d35444a1fa60fd266caf4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7404464739333907654, guid: 2d316093d65d35444a1fa60fd266caf4,
         type: 3}
       propertyPath: eventCamera
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7404464739333907654, guid: 2d316093d65d35444a1fa60fd266caf4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2d316093d65d35444a1fa60fd266caf4, type: 3}
 --- !u!4 &595311783 stripped
 Transform:
@@ -6325,6 +6331,12 @@ PrefabInstance:
       propertyPath: originalLeftHand
       value: 
       objectReference: {fileID: 563559718}
+    - target: {fileID: 3484657463522392691, guid: d674cb4ee87e4eb499c0710ab4484c57,
+        type: 3}
+      propertyPath: RPCReceiverPrefab
+      value: 
+      objectReference: {fileID: 903696058229990346, guid: ed2127a0084549f49bc6bc134f894bf5,
+        type: 3}
     - target: {fileID: 3484657463522392691, guid: d674cb4ee87e4eb499c0710ab4484c57,
         type: 3}
       propertyPath: originalRightHand
@@ -11625,6 +11637,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 595311782}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1700872552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700872551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346bedb8ca2622d4288b2b30995fbe2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1702682260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5792917508215163511, guid: 0cde110359ca8b042a65de05181f71e7,

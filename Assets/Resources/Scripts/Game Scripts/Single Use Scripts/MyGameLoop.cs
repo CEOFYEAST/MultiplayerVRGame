@@ -73,10 +73,7 @@ public class MyGameLoop : MonoBehaviour
     /// <summary>
     /// updates scoreboards on a player scoring a basket
     /// <summary>
-    public void OnScore(GameObject basketball){
-        // gets the player that made the shot
-        Player scorer = basketball.GetComponent<PhotonView>().Owner;
-
+    public void OnScore(Player scorer){
         // gets the team number of the player that made the shot
         int scorerTeamNumber = (int) scorer.CustomProperties[teamNumberHashmapKey];
 
@@ -102,9 +99,6 @@ public class MyGameLoop : MonoBehaviour
 
         // fills team scores dictionary with key (team number) - value (team score) pairs
         InitializeTeamScoresDictionary();
-
-        // prevents players from scoring during the warmup
-        scoreTrigger.SetActive(false);
 
         // starts the timer
         StartCoroutine(Timer(popupText, "Warmup ending in ", 15, BlockOne));

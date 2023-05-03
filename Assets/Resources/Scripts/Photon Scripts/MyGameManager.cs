@@ -21,6 +21,7 @@ namespace Com.MyCompany.MyGame
         // prefabs of networked objects
         public GameObject usernameDisplayPrefab;
         public GameObject basketballRackPrefab;
+        public GameObject RPCReceiverPrefab;
 
         // local rig
         public GameObject localRig;
@@ -196,6 +197,11 @@ namespace Com.MyCompany.MyGame
                 usernameDisplayPosition,
                 Quaternion.identity,
                 0);
+            // instantiates player RPCReceiver over the network
+                GameObject RPCReceiver = PhotonNetwork.Instantiate(RPCReceiverPrefab.name,
+                new Vector3(0, 0, 0),
+                Quaternion.identity,
+                0);
 
             //gets parents of hands
             GameObject leftHandParent = originalLeftHand.GetComponentInParent<Transform>().parent.gameObject;
@@ -227,6 +233,9 @@ namespace Com.MyCompany.MyGame
             //assigns hand animators of direct hands
             leftHandParent.GetComponent<AnimateHandOnInput>().handAnimator = leftHand.GetComponent<Animator>();
             rightHandParent.GetComponent<AnimateHandOnInput>().handAnimator = rightHand.GetComponent<Animator>();
+
+            // changes name of local RPCReceiver so its easier to find
+            RPCReceiver.name = "RPCReceiver";
 
             //moves player to correct position on the court
             MovePlayer();

@@ -19,15 +19,11 @@ public class MyGameLoop : MonoBehaviour
     // int dictating the points a player recieves for scoring a shot
     int pointsPerScore = 3;
 
-    #endregion
+    int startingTimerLength = 5;
 
-
-    #region Public Hidden Fields
-
-    public List<List<Player>> teamsLists = new List<List<Player>>();
+    int gameTimerLength = 10;
 
     #endregion
-
 
     #region Private Serializable Fields
 
@@ -36,7 +32,7 @@ public class MyGameLoop : MonoBehaviour
     private TMPro.TextMeshProUGUI popupText;
 
     [SerializeField]
-    private TMPro.TextMeshProUGUI timerText;
+    private TMPro.TextMeshProUGUI[] timerTexts;
 
     // trigger that tracks goals
     [SerializeField]
@@ -101,28 +97,8 @@ public class MyGameLoop : MonoBehaviour
         InitializeTeamScoresDictionary();
 
         // starts the timer
-        StartCoroutine(Timer(popupText, "Warmup ending in ", 15, BlockOne));
+        StartCoroutine(Timer(popupText, "Warmup ending in ", startingTimerLength, BlockOne));
     }
-
-    /**
-    /// <summary>
-    /// fills list with lists that represent individual teams, each filled with the players on said teams
-    /// <summary>
-    private void InitializeTeamLists(){
-        foreach(Player player in PhotonNetwork.PlayerList){
-            // grabs player's team number
-            int playerTeamNumber = (int) player.CustomProperties[teamNumberHashmapKey];
-
-            // creates list for current player's team if one doesn't exist
-            if(teamsLists.Count < playerTeamNumber + 1){
-                teamsLists.Add(new List<Player>());
-            }
-
-            // adds player to correct team list
-            teamsLists[playerTeamNumber].Add(player);
-        }
-    }
-    */
 
     /// <summary>
     /// fills team scores dictionary with teams
@@ -161,6 +137,10 @@ public class MyGameLoop : MonoBehaviour
         /// <summary>
         #region Game Loop Blocks
 
+        /// <summary>
+        /// occurs after starting timer ends
+        /// is the main body of the game
+        /// <summary>
         private void BlockOne(){
             // disables popup text for the time being
             popupText.transform.parent.gameObject.SetActive(false);
@@ -168,12 +148,55 @@ public class MyGameLoop : MonoBehaviour
             // allows players to score 
             scoreTrigger.SetActive(true);
 
-            // starts game timer
-            StartCoroutine(Timer(timerText, "", 60, BlockTwo));
+            // starts game timers
+            for(int i = 0; i < timerTexts.Length; i++){
+                if(i != timerTexts.Length - 1){
+                    StartCoroutine(Timer(timerTexts[i], "", gameTimerLength, null));
+                }
+                else {
+                    StartCoroutine(Timer(timerTexts[i], "", gameTimerLength, BlockTwo));
+                }
+            }
         }
 
+        /// <summary>
+        /// contains the "end" of the game, occurs when game timer ends
+        /// <summary>
         private void BlockTwo(){
+            Debug.Log("Called Block Two");
 
+            int highestTeamScore = teamScores[0];
+
+            // iterates through team scores and fills highestTeamScore
+            for(int i = 1; i < teamScores.Count; i++){
+                if(teamScores[i] > highestTeamScore){
+                    highestTeamScore = teamScores[i];
+                }
+            }
+            
+            scoreTrigger.SetActive(false);
+
+            // grabs team number of local player
+            int playerTeamNumber = (int) PhotonNetwork.LocalPlayer.CustomProperties[teamNumberHashmapKey];
+
+            popupText.transform.parent.gameObject.SetActive(true);
+
+            // iterates through team scores and displays proper message -
+            /// depending on if player's team had the highest score
+            for(int i = 0; i < teamScores.Count; i++){
+                if(teamScores[i] == highestTeamScore){
+                    if(playerTeamNumber == i){
+                        popupText.text = "You Win!";
+                        return;
+                    } else {
+                        if(i == teamScores.Count - 1){
+                            popupText.text = "You lose!";
+                            return;
+                        } 
+                        continue;
+                    }            
+                }
+            }
         }
 
         #endregion
@@ -203,7 +226,10 @@ public class MyGameLoop : MonoBehaviour
             }
             if (length == 0)
             {
-                callback?.Invoke();
+                if(callback != null){
+                    callback?.Invoke();
+                }
+
                 break;
             }
             length--;

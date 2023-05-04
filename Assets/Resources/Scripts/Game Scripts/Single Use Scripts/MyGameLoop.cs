@@ -142,7 +142,7 @@ public class MyGameLoop : MonoBehaviour
         /// <summary>
         private void BlockOne(){
             // disables popup text for the time being
-            popupText.transform.parent.gameObject.SetActive(false);
+            popupText.gameObject.SetActive(false);
 
             // allows players to score 
             scoreTrigger.SetActive(true);
@@ -178,7 +178,9 @@ public class MyGameLoop : MonoBehaviour
             // grabs team number of local player
             int playerTeamNumber = (int) PhotonNetwork.LocalPlayer.CustomProperties[teamNumberHashmapKey];
 
-            popupText.transform.parent.gameObject.SetActive(true);
+            popupText.gameObject.SetActive(true);
+
+            popupText.text = "You lose!";
 
             // iterates through team scores and displays proper message -
             /// depending on if player's team had the highest score
@@ -187,13 +189,7 @@ public class MyGameLoop : MonoBehaviour
                     if(playerTeamNumber == i){
                         popupText.text = "You Win!";
                         return;
-                    } else {
-                        if(i == teamScores.Count - 1){
-                            popupText.text = "You lose!";
-                            return;
-                        } 
-                        continue;
-                    }            
+                    }   
                 }
             }
         }

@@ -742,50 +742,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "1ce80054-410d-4112-a332-50faa7fb4f23",
-                    "path": "<XRController>{RightHand}/gripPressed",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "dd433817-216c-46b9-8dd3-f3a4ea1767b9",
-                    "path": "<XRController>{RightHand}/grip",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "Select Value",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fa59aed1-ae0b-4074-a58c-294b85f46228",
-                    "path": "<XRController>{RightHand}/triggerPressed",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "Activate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "150f414f-61bf-47b1-b4f8-f772a2a40565",
-                    "path": "<XRController>{RightHand}/trigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "Activate Value",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "92bb5b8f-bf48-4dab-af05-50a865773895",
                     "path": "<XRController>{RightHand}/triggerPressed",
                     "interactions": "",
@@ -847,6 +803,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Toggle Interface",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa59aed1-ae0b-4074-a58c-294b85f46228",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ce80054-410d-4112-a332-50faa7fb4f23",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Activate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "150f414f-61bf-47b1-b4f8-f772a2a40565",
+                    "path": "<XRController>{RightHand}/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Select Value",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dd433817-216c-46b9-8dd3-f3a4ea1767b9",
+                    "path": "<XRController>{RightHand}/grip",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Activate Value",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -25,8 +25,11 @@ namespace Com.MyCompany.MyGame
 
         #region Private Constants
 
-        // store the team number custom properties key to avoid typos
+        // hashtable keys stored to avoid typos/mis-references
         const string teamNumberHashmapKey = "TeamNumber";
+        const string warmupLengthKey = "WarmupLength";
+        const string gameLengthKey = "GameLength";
+        const string pointsPerScoreKey = "PointsPerScore";
         
         #endregion
 
@@ -34,8 +37,19 @@ namespace Com.MyCompany.MyGame
 
         void Start()
         {
+            // sets default warmup length
+            UpdateCustomRoomSettings(115);
+
+            // sets default game length
+            UpdateCustomRoomSettings(260);
+
+            // sets default points per ball
+            UpdateCustomRoomSettings(33);
+
+            // assigns a player to a team
             AssignPlayerTeam();
 
+            // updates the waiting room interface with the new information after a small delay
             StartCoroutine(Timer());
         }
 
@@ -90,7 +104,8 @@ namespace Com.MyCompany.MyGame
 
         public void StartGame(){
             //makes sure a level is only being loaded by the master client and there are atleast two players in the waiting room
-            if (!PhotonNetwork.IsMasterClient || PhotonNetwork.PlayerList.Length < 2)
+            // if (!PhotonNetwork.IsMasterClient || PhotonNetwork.PlayerList.Length < 2)
+            if (!PhotonNetwork.IsMasterClient)
             {
                 return;
             }
@@ -101,6 +116,41 @@ namespace Com.MyCompany.MyGame
 
             //starts the game
             PhotonNetwork.LoadLevel("Game Room");
+        }
+
+        /// <summary>
+        /// adds a custom room setting using updateWith
+        /// - the first digit of updateWith represents the key to use
+        /// - everything after the first digit represents the value to fill the key with
+        /// <summary>
+        public void UpdateCustomRoomSettings(int updateWith){
+            string fieldToUpdate = warmupLengthKey;
+
+            // determines the key to update using the first digit of updateWith
+            switch(GetFirstDigit(updateWith)){
+                case 1:
+                    fieldToUpdate = warmupLengthKey;
+                    break;
+                case 2:
+                    fieldToUpdate = gameLengthKey;
+                    break;
+                case 3:
+                    fieldToUpdate = pointsPerScoreKey;
+                    break;
+            }
+
+            // creates a new hashmap to store a custom room setting
+            ExitGames.Client.Photon.Hashtable _myCustomProperties = new ExitGames.Client.Photon.Hashtable();
+
+            // sets the hashmap to the value of updateWith
+            _myCustomProperties[fieldToUpdate] = RemoveFirstDigit(updateWith);
+
+            // updates the room's custom properties over the network
+            PhotonNetwork.CurrentRoom.SetCustomProperties(_myCustomProperties);
+
+            Debug.Log("Intialized " + fieldToUpdate + " with " + RemoveFirstDigit(updateWith));
+
+            Debug.Log("Accessing new field = " + PhotonNetwork.CurrentRoom.CustomProperties[fieldToUpdate]);
         }
 
         #endregion
@@ -137,7 +187,7 @@ namespace Com.MyCompany.MyGame
         /// <summary>
         /// updates player fields to reflect PlayerList
         /// <summary>
-        void UpdatePlayerFields(GameObject[] chosenImageBackgrounds){
+        private void UpdatePlayerFields(GameObject[] chosenImageBackgrounds){
             // clears all text and disables all image backgrounds
             foreach(GameObject imageBackground in chosenImageBackgrounds){
                 // gets player text item under image background
@@ -176,6 +226,26 @@ namespace Com.MyCompany.MyGame
             }
         }
 
+        // Find the first digit
+        private int GetFirstDigit(int n)
+        {
+            string stringN = n.ToString();
+
+            stringN = stringN.Substring(0, 1);
+
+            return Int32.Parse(stringN);
+        }
+
+        // Remove the first digit
+        private int RemoveFirstDigit(int n)
+        {
+            string stringN = n.ToString();
+
+            stringN = stringN.Substring(1);
+
+            return Int32.Parse(stringN);
+        }
+
         #endregion
 
         #region Private IEnumerators
@@ -185,14 +255,6 @@ namespace Com.MyCompany.MyGame
         /// before player fields are updated
         /// <summary>
         private IEnumerator Timer(){
-            //updates every tenth second 
-            /**
-            for (int i = 9; i >= 0; i--)
-            {
-                yield return new WaitForSeconds(.1f);
-            }
-            */
-
             yield return new WaitForSeconds(.5f);
 
             UpdatePlayerFields(masterImageBackgrounds);

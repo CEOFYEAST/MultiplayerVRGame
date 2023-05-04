@@ -16,10 +16,6 @@ public class MyGameLoop : MonoBehaviour
     // dictionary containing the scores of every team and their respective team number as the key
     private static IDictionary<int, int> teamScores = new Dictionary<int, int>();
 
-    // int dictating the points a player recieves for scoring a shot
-    int pointsPerScore = 3;
-
-    int startingTimerLength = 5;
 
     int gameTimerLength = 10;
 
@@ -47,8 +43,11 @@ public class MyGameLoop : MonoBehaviour
 
     #region Private Constants
 
-        // store the team number custom properties key to avoid typos
+        // hashtable keys stored to avoid typos/mis-references
         const string teamNumberHashmapKey = "TeamNumber";
+        const string warmupLengthKey = "WarmupLength";
+        const string gameLengthKey = "GameLength";
+        const string pointsPerScoreKey = "PointsPerScore";
         
     #endregion
 
@@ -75,7 +74,7 @@ public class MyGameLoop : MonoBehaviour
 
         // updates the proper team score by a fixed amount
         if(teamScores.ContainsKey(scorerTeamNumber)){
-            teamScores[scorerTeamNumber] += pointsPerScore;
+            teamScores[scorerTeamNumber] += (int) PhotonNetwork.CurrentRoom.CustomProperties[pointsPerScoreKey];
         }
 
         // updates the scoreboards based on the new score
@@ -97,7 +96,7 @@ public class MyGameLoop : MonoBehaviour
         InitializeTeamScoresDictionary();
 
         // starts the timer
-        StartCoroutine(Timer(popupText, "Warmup ending in ", startingTimerLength, BlockOne));
+        StartCoroutine(Timer(popupText, "Warmup ending in ", (int) PhotonNetwork.CurrentRoom.CustomProperties[warmupLengthKey], BlockOne));
     }
 
     /// <summary>
@@ -151,10 +150,10 @@ public class MyGameLoop : MonoBehaviour
             // starts game timers
             for(int i = 0; i < timerTexts.Length; i++){
                 if(i != timerTexts.Length - 1){
-                    StartCoroutine(Timer(timerTexts[i], "", gameTimerLength, null));
+                    StartCoroutine(Timer(timerTexts[i], "", (int) PhotonNetwork.CurrentRoom.CustomProperties[gameLengthKey], null));
                 }
                 else {
-                    StartCoroutine(Timer(timerTexts[i], "", gameTimerLength, BlockTwo));
+                    StartCoroutine(Timer(timerTexts[i], "", (int) PhotonNetwork.CurrentRoom.CustomProperties[gameLengthKey], BlockTwo));
                 }
             }
         }

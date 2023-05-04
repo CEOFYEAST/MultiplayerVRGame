@@ -1323,6 +1323,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5792917509893916935, guid: 7b1f99240d3b4774291693fdbf65543a,
+        type: 3}
+      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Id
+      value: d5feeca9-42cd-4e30-ba6a-7f9184a6677b
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792917509893916935, guid: 7b1f99240d3b4774291693fdbf65543a,
+        type: 3}
+      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Name
+      value: Directional Anchor Rotation
+      objectReference: {fileID: 0}
     - target: {fileID: 5792917510008166722, guid: 7b1f99240d3b4774291693fdbf65543a,
         type: 3}
       propertyPath: m_IsActive
@@ -6146,6 +6156,24 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2036779823}
     m_Modifications:
+    - target: {fileID: 1593993404509852769, guid: d3ee769dafea71f40aed57a36e37f235,
+        type: 3}
+      propertyPath: basketballPrefabReference
+      value: 
+      objectReference: {fileID: 7241942660758746391, guid: 424b039639e198a458bae83c8ff8f9cf,
+        type: 3}
+    - target: {fileID: 3737847470064963252, guid: d3ee769dafea71f40aed57a36e37f235,
+        type: 3}
+      propertyPath: basketballPrefabReference
+      value: 
+      objectReference: {fileID: 7241942660758746391, guid: 13899a77892719a47b366b473bf5be73,
+        type: 3}
+    - target: {fileID: 7672823336742246218, guid: d3ee769dafea71f40aed57a36e37f235,
+        type: 3}
+      propertyPath: basketballPrefabReference
+      value: 
+      objectReference: {fileID: 7241942660758746391, guid: 424b039639e198a458bae83c8ff8f9cf,
+        type: 3}
     - target: {fileID: 9199565957696320149, guid: d3ee769dafea71f40aed57a36e37f235,
         type: 3}
       propertyPath: m_Name

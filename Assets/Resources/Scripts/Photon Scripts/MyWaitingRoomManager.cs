@@ -30,6 +30,7 @@ namespace Com.MyCompany.MyGame
         const string warmupLengthKey = "WarmupLength";
         const string gameLengthKey = "GameLength";
         const string pointsPerScoreKey = "PointsPerScore";
+        const string gameModeKey = "GameMode";
         
         #endregion
 
@@ -37,14 +38,17 @@ namespace Com.MyCompany.MyGame
 
         void Start()
         {
-            // sets default warmup length
+            // sets default warmup length (15 seconds)
             UpdateCustomRoomSettings(115);
 
-            // sets default game length
+            // sets default game length (60 seconds)
             UpdateCustomRoomSettings(260);
 
-            // sets default points per ball
+            // sets default points per ball (3 points)
             UpdateCustomRoomSettings(33);
+
+            // sets default game mode (ffa)
+            UpdateCustomRoomSettings(40);
 
             // assigns a player to a team
             AssignPlayerTeam();
@@ -69,7 +73,10 @@ namespace Com.MyCompany.MyGame
         {
             Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
 
-            AssignPlayerTeam();
+            // only sets player's team to their index in playerList if the gamemode is free for all
+            if((int) PhotonNetwork.CurrentRoom.CustomProperties[gameModeKey] == 0){
+                AssignPlayerTeam();
+            }
 
             StartCoroutine(Timer());
 
@@ -83,7 +90,10 @@ namespace Com.MyCompany.MyGame
         {
             Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
 
-            AssignPlayerTeam();
+            // only sets player's team to their index in playerList if the gamemode is free for all
+            if((int) PhotonNetwork.CurrentRoom.CustomProperties[gameModeKey] == 0){
+                AssignPlayerTeam();
+            }
 
             StartCoroutine(Timer());
 
@@ -137,6 +147,16 @@ namespace Com.MyCompany.MyGame
                 case 3:
                     fieldToUpdate = pointsPerScoreKey;
                     break;
+                case 4:
+                    fieldToUpdate = gameModeKey;
+
+                    // sets every player's team to their index in player list if the gm is switched from teams to ffa
+                    if(updateWith == 1){
+                        AssignPlayerTeam();
+                        StartCoroutine(Timer());
+                    }
+
+                    break;
             }
 
             // creates a new hashmap to store a custom room setting
@@ -153,12 +173,29 @@ namespace Com.MyCompany.MyGame
             Debug.Log("Accessing new field = " + PhotonNetwork.CurrentRoom.CustomProperties[fieldToUpdate]);
         }
 
+        /// <summary>
+        /// sets the local player's team to teamToAssign (AssignPlayerTeam overload)
+        /// <summary>
+        public void AssignPlayerTeam(int teamToAssign){
+            // creates a new hashmap to store the player's team number
+            ExitGames.Client.Photon.Hashtable _myCustomProperties = new ExitGames.Client.Photon.Hashtable();
+
+            // sets the hashmap (team number) to teamToAssign
+            _myCustomProperties[teamNumberHashmapKey] = teamToAssign;
+
+            // updates the player's custom properties locally 
+            PhotonNetwork.LocalPlayer.CustomProperties = _myCustomProperties;
+
+            // updates the player's custom properties over the network
+            PhotonNetwork.LocalPlayer.SetCustomProperties(_myCustomProperties);
+        }
+
         #endregion
 
         #region Private Methods
 
         /// <summary>
-        /// assigns the local player's team and updates their custom properties team hashmap to reflect the change
+        /// sets the local player's team to their index in playerList
         /// <summary>
         private void AssignPlayerTeam(){
             // creates a new hashmap to store the player's team number
@@ -182,7 +219,6 @@ namespace Com.MyCompany.MyGame
             // updates the player's custom properties over the network
             PhotonNetwork.LocalPlayer.SetCustomProperties(_myCustomProperties);
         }
-
 
         /// <summary>
         /// updates player fields to reflect PlayerList

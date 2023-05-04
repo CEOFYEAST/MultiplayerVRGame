@@ -57,6 +57,10 @@ namespace Com.MyCompany.MyGame
             StartCoroutine(Timer());
         }
 
+        void Update(){
+            StartCoroutine(Timer());
+        }
+
         #endregion
 
         #region Photon Callbacks
@@ -151,7 +155,7 @@ namespace Com.MyCompany.MyGame
                     fieldToUpdate = gameModeKey;
 
                     // sets every player's team to their index in player list if the gm is switched from teams to ffa
-                    if(updateWith == 1){
+                    if(updateWith == 0){
                         AssignPlayerTeam();
                         StartCoroutine(Timer());
                     }
@@ -188,6 +192,8 @@ namespace Com.MyCompany.MyGame
 
             // updates the player's custom properties over the network
             PhotonNetwork.LocalPlayer.SetCustomProperties(_myCustomProperties);
+
+            StartCoroutine(Timer());
         }
 
         #endregion

@@ -38,23 +38,17 @@ namespace Com.MyCompany.MyGame
 
         void Start()
         {
+            // sets default points per ball (3 points)
+            UpdateCustomRoomSettings(13);
+
             // sets default warmup length (15 seconds)
-            UpdateCustomRoomSettings(115);
+            UpdateCustomRoomSettings(215);
 
             // sets default game length (60 seconds)
-            UpdateCustomRoomSettings(260);
+            UpdateCustomRoomSettings(360);
 
-            // sets default points per ball (3 points)
-            UpdateCustomRoomSettings(33);
-
-            // sets default game mode (ffa)
-            UpdateCustomRoomSettings(40);
-
-            // assigns a player to a team
-            AssignPlayerTeam();
-
-            // updates the waiting room interface with the new information after a small delay
-            StartCoroutine(Timer());
+            // assigns a player to a team based on their index in playerlist
+            AssignPlayerTeamByIndex();
         }
 
         void Update(){
@@ -77,13 +71,6 @@ namespace Com.MyCompany.MyGame
         {
             Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
 
-            // only sets player's team to their index in playerList if the gamemode is free for all
-            if((int) PhotonNetwork.CurrentRoom.CustomProperties[gameModeKey] == 0){
-                AssignPlayerTeam();
-            }
-
-            StartCoroutine(Timer());
-
             if (PhotonNetwork.IsMasterClient)
             {
                 Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
@@ -93,13 +80,6 @@ namespace Com.MyCompany.MyGame
         public override void OnPlayerLeftRoom(Player other)
         {
             Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
-
-            // only sets player's team to their index in playerList if the gamemode is free for all
-            if((int) PhotonNetwork.CurrentRoom.CustomProperties[gameModeKey] == 0){
-                AssignPlayerTeam();
-            }
-
-            StartCoroutine(Timer());
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -151,16 +131,6 @@ namespace Com.MyCompany.MyGame
                 case 3:
                     fieldToUpdate = pointsPerScoreKey;
                     break;
-                case 4:
-                    fieldToUpdate = gameModeKey;
-
-                    // sets every player's team to their index in player list if the gm is switched from teams to ffa
-                    if(updateWith == 0){
-                        AssignPlayerTeam();
-                        StartCoroutine(Timer());
-                    }
-
-                    break;
             }
 
             // creates a new hashmap to store a custom room setting
@@ -192,8 +162,6 @@ namespace Com.MyCompany.MyGame
 
             // updates the player's custom properties over the network
             PhotonNetwork.LocalPlayer.SetCustomProperties(_myCustomProperties);
-
-            StartCoroutine(Timer());
         }
 
         #endregion
@@ -203,7 +171,7 @@ namespace Com.MyCompany.MyGame
         /// <summary>
         /// sets the local player's team to their index in playerList
         /// <summary>
-        private void AssignPlayerTeam(){
+        private void AssignPlayerTeamByIndex(){
             // creates a new hashmap to store the player's team number
             ExitGames.Client.Photon.Hashtable _myCustomProperties = new ExitGames.Client.Photon.Hashtable();
 
@@ -268,7 +236,10 @@ namespace Com.MyCompany.MyGame
             }
         }
 
-        // Find the first digit
+        /// <summary>
+        /// Get the first digit of an int
+        /// - made because unity events can only accept one value, so I pass two values in a single int
+        /// <summary>
         private int GetFirstDigit(int n)
         {
             string stringN = n.ToString();
@@ -278,7 +249,10 @@ namespace Com.MyCompany.MyGame
             return Int32.Parse(stringN);
         }
 
-        // Remove the first digit
+        /// <summary>
+        /// Remove the first digit of an int
+        /// - made because unity events can only accept one value, so I pass two values in a single int
+        /// <summary>
         private int RemoveFirstDigit(int n)
         {
             string stringN = n.ToString();

@@ -130,6 +130,52 @@ public class MyGameLoop : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// method that returns the proper message if the local player won, tied or lost
+    /// <summary>
+    private string GetWinStatusMessage(){
+        // highest score contained in teamScores
+        // - multiple teams could have the highest score
+        int highestTeamScore = 0;
+
+        // iterates through team scores and fills highestTeamScore
+        for(int i = 0; i < teamScores.Count; i++){
+            if(teamScores[i] > highestTeamScore){
+                highestTeamScore = teamScores[i];
+            }
+        }
+
+        // number of teams that scored the highest score
+        int teamsWithHighestScore = 0;
+
+        // iterates through team scores and counts number of teams with highest score
+        for(int i = 0; i < teamScores.Count; i++){
+            if(teamScores[i] == highestTeamScore){
+                teamsWithHighestScore++;
+            }
+        }
+        
+        // grabs team number of local player
+        int playerTeamNumber = (int) PhotonNetwork.LocalPlayer.CustomProperties[teamNumberHashmapKey];
+
+        // iterates through team scores and returns neccessary win message
+        for(int i = 0; i < teamScores.Count; i++){
+            if(teamScores[i] == highestTeamScore){
+                if(playerTeamNumber == i){
+                    // makes sure the player didn't tie
+                    if(!(teamsWithHighestScore > 1)){
+                        return "You Won!";
+                    } else {
+                        return "You Tied!";
+                    }
+                }   
+            }
+        }
+
+        // returns loss if player didn't win or tie
+        return "You Lost!";
+    }
+
         /// <summary>
         /// methods that constitute the game loop, which 
         ///  - gameloop is broken up into blocks that can be called individually, allows for timers
@@ -164,34 +210,14 @@ public class MyGameLoop : MonoBehaviour
         private void BlockTwo(){
             Debug.Log("Called Block Two");
 
-            int highestTeamScore = teamScores[0];
-
-            // iterates through team scores and fills highestTeamScore
-            for(int i = 1; i < teamScores.Count; i++){
-                if(teamScores[i] > highestTeamScore){
-                    highestTeamScore = teamScores[i];
-                }
-            }
-            
+            // prevents players from scoring because the game is over
             scoreTrigger.SetActive(false);
 
-            // grabs team number of local player
-            int playerTeamNumber = (int) PhotonNetwork.LocalPlayer.CustomProperties[teamNumberHashmapKey];
+            // fills popupText.text to display the local player's win status
+            popupText.text = GetWinStatusMessage();
 
+            // re-activates the popup in order to tell the player if they won or not
             popupText.gameObject.SetActive(true);
-
-            popupText.text = "You lose!";
-
-            // iterates through team scores and displays proper message -
-            /// depending on if player's team had the highest score
-            for(int i = 0; i < teamScores.Count; i++){
-                if(teamScores[i] == highestTeamScore){
-                    if(playerTeamNumber == i){
-                        popupText.text = "You Win!";
-                        return;
-                    }   
-                }
-            }
         }
 
         #endregion

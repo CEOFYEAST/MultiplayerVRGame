@@ -16,10 +16,10 @@ public class MyGameLoop : MonoBehaviour
     // dictionary containing the scores of every team and their respective team number as the key
     private static IDictionary<int, int> teamScores = new Dictionary<int, int>();
 
-
     int gameTimerLength = 10;
 
     #endregion
+
 
     #region Private Serializable Fields
 

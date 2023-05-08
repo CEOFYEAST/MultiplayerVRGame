@@ -1363,7 +1363,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &130084123
 Canvas:
   m_ObjectHideFlags: 0
@@ -4740,6 +4740,7 @@ GameObject:
   - component: {fileID: 580417895}
   - component: {fileID: 580417894}
   - component: {fileID: 580417893}
+  - component: {fileID: 580417899}
   m_Layer: 0
   m_Name: Scoreboard Content
   m_TagString: Untagged
@@ -4886,6 +4887,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &580417899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580417891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ef69195a4e59f4390361de49b2a447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &595311782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6749,6 +6762,7 @@ GameObject:
   - component: {fileID: 838017332}
   - component: {fileID: 838017331}
   - component: {fileID: 838017330}
+  - component: {fileID: 838017336}
   m_Layer: 0
   m_Name: Scoreboard Content
   m_TagString: Untagged
@@ -6895,6 +6909,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &838017336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838017328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ef69195a4e59f4390361de49b2a447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &844784233
 GameObject:
   m_ObjectHideFlags: 0
@@ -11939,6 +11965,7 @@ GameObject:
   - component: {fileID: 1599453033}
   - component: {fileID: 1599453032}
   - component: {fileID: 1599453037}
+  - component: {fileID: 1599453038}
   m_Layer: 0
   m_Name: Scoreboard Content
   m_TagString: Untagged
@@ -12083,6 +12110,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ce0b8d691d60db4a88e4ea24bf45445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1599453038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599453030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ef69195a4e59f4390361de49b2a447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1614061042
@@ -15291,7 +15330,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &2134065317
 Canvas:
   m_ObjectHideFlags: 0

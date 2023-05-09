@@ -37,15 +37,17 @@ namespace Com.MyCompany.MyGame
         #region MonoBehaviour callbacks
 
         void Start()
-        {
-            // sets default points per ball (3 points)
-            UpdateCustomRoomSettings(13);
-
+        {   
             // sets default warmup length (15 seconds)
-            UpdateCustomRoomSettings(215);
+            //UpdateCustomRoomSettings(115);
+            UpdateCustomRoomSettings(11);
 
             // sets default game length (60 seconds)
-            UpdateCustomRoomSettings(360);
+            //UpdateCustomRoomSettings(360);
+            UpdateCustomRoomSettings(21800);
+
+            // sets default points per ball (3 points)
+            UpdateCustomRoomSettings(33);
 
             // assigns a player to a team based on their index in playerlist
             AssignPlayerTeamByIndex();

@@ -25,13 +25,19 @@ public class TriggerScript : MonoBehaviour
             // grabs the photon view of the basketball
             PhotonView basketballView = other.GetComponent<PhotonView>();
 
+            // grabs the owner of the photon view of the basketball
+            Player basketballViewOwner = basketballView.Owner;
+
             // only updates scores if the basketball is mine
             if(basketballView.IsMine){
                 // grabs the photon view of the local RPCReceiver
                 PhotonView RPCReceiverView = RPCReceiver.GetComponent<PhotonView>();
 
+                // destroys the scoring basketball so it can only count for one score
+                PhotonNetwork.Destroy(other.gameObject);
+
                 // updates scores/scoreboards over the network
-                RPCReceiverView.RPC("OnScore", RpcTarget.All, basketballView.Owner);
+                RPCReceiverView.RPC("OnScore", RpcTarget.All, basketballViewOwner);
             }
         }
 

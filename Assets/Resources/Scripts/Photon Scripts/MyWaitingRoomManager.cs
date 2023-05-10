@@ -30,7 +30,6 @@ namespace Com.MyCompany.MyGame
         const string warmupLengthKey = "WarmupLength";
         const string gameLengthKey = "GameLength";
         const string pointsPerScoreKey = "PointsPerScore";
-        const string gameModeKey = "GameMode";
         
         #endregion
 

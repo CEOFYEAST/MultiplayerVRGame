@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 4427190612915881573}
   m_Layer: 0
   m_Name: Basketball Ball (networked)
-  m_TagString: Untagged
+  m_TagString: Basketball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

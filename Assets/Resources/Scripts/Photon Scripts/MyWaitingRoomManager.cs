@@ -39,10 +39,10 @@ namespace Com.MyCompany.MyGame
         {   
             // sets default warmup length (15 seconds)
             UpdateCustomRoomSettings(115);
-
+            
             // sets default game length (60 seconds)
             UpdateCustomRoomSettings(260);
-
+            
             // sets default points per ball (3 points)
             UpdateCustomRoomSettings(33);
 

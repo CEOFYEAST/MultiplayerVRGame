@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 9199565957696320154}
   m_Layer: 0
   m_Name: Ball Rack (networked)
-  m_TagString: Untagged
+  m_TagString: Rack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

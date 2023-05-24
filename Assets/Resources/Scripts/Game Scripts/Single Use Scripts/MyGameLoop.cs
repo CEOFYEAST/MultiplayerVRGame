@@ -176,6 +176,18 @@ public class MyGameLoop : MonoBehaviour
         return "You Lost!";
     }
 
+    /// <summary>
+    /// disables all game objects with the given tag
+    /// <summary>
+    private void DisableGameObjectsWithTag(string tag){
+        GameObject[] objectsToDisable = GameObject.FindGameObjectsWithTag(tag);
+
+        foreach(GameObject objectToDisable in objectsToDisable)
+        {
+            objectToDisable.SetActive(false);
+        }
+    }
+
         /// <summary>
         /// methods that constitute the game loop, which 
         ///  - gameloop is broken up into blocks that can be called individually, allows for timers
@@ -218,6 +230,12 @@ public class MyGameLoop : MonoBehaviour
 
             // re-activates the popup in order to tell the player if they won or not
             popupText.gameObject.SetActive(true);
+
+            // destroys all racks to prevent new basketballs from spawning
+            DisableGameObjectsWithTag("Rack");
+
+            // destroys all basketballs
+            DisableGameObjectsWithTag("Basketball");
         }
 
         #endregion

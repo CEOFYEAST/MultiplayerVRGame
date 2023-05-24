@@ -47,6 +47,9 @@ public class UsernameRegionDisplaysHandler : MonoBehaviour
 
     private string GetRegionName(string regionKey){
         switch(regionKey){
+            case "best":
+                return "Best Region";
+                break;
             case "asia":
                 return "Asia";
                 break;

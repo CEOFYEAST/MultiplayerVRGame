@@ -101,7 +101,10 @@ namespace Com.MyCompany.MyGame
 
                 // overrides best found region if player has a particular region preference set
                 if(PlayerPrefs.HasKey(regionPrefKey)){
-                    PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = PlayerPrefs.GetString(regionPrefKey);
+                    // makes sure region preference isn't best region
+                    if(!(string.Equals(PlayerPrefs.GetString(regionPrefKey), "best"))){
+                        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = PlayerPrefs.GetString(regionPrefKey);
+                    }
                 } 
 
                 // #Critical, we must first and foremost connect to Photon Online Server.

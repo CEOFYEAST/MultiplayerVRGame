@@ -11102,7 +11102,7 @@ PrefabInstance:
     - target: {fileID: 2183919295101783438, guid: 818b6f22ecbea934eaab7cb35781e91e,
         type: 3}
       propertyPath: connectOnStart
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2183919295101783438, guid: 818b6f22ecbea934eaab7cb35781e91e,
         type: 3}
@@ -22570,7 +22570,7 @@ PrefabInstance:
     - target: {fileID: 7404464739333907650, guid: 2d316093d65d35444a1fa60fd266caf4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7404464739333907650, guid: 2d316093d65d35444a1fa60fd266caf4,
         type: 3}
@@ -22590,7 +22590,7 @@ PrefabInstance:
     - target: {fileID: 7404464739333907650, guid: 2d316093d65d35444a1fa60fd266caf4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.261
+      value: -3.281
       objectReference: {fileID: 0}
     - target: {fileID: 7404464739333907650, guid: 2d316093d65d35444a1fa60fd266caf4,
         type: 3}
@@ -22647,8 +22647,28 @@ PrefabInstance:
       propertyPath: eventCamera
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7404464739333907654, guid: 2d316093d65d35444a1fa60fd266caf4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2d316093d65d35444a1fa60fd266caf4, type: 3}
+--- !u!1 &7404464739097943541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7404464739333907653, guid: 2d316093d65d35444a1fa60fd266caf4,
+    type: 3}
+  m_PrefabInstance: {fileID: 7404464739097943540}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7404464739097943542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7404464739097943541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c37f2f0b3b2ddd24cbff243d2ebdc732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 841456618}
 --- !u!4 &7672823337845522320
 Transform:
   m_ObjectHideFlags: 0
@@ -23188,8 +23208,8 @@ Transform:
   - {fileID: 7672823337845522320}
   - {fileID: 3737847468953577070}
   - {fileID: 1593993403474033851}
-  - {fileID: 1524633526}
   - {fileID: 1897186069}
+  - {fileID: 1524633526}
   - {fileID: 2142786392}
   m_Father: {fileID: 2036779823}
   m_RootOrder: 7

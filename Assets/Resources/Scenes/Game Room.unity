@@ -15433,6 +15433,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 855982265}
+    - target: {fileID: 8370189550425240472, guid: 5dc10330cfd70c3459ac6f0b41087291,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadWaitingRoom
+      objectReference: {fileID: 0}
     - target: {fileID: 8370189551719086592, guid: 5dc10330cfd70c3459ac6f0b41087291,
         type: 3}
       propertyPath: m_RootOrder

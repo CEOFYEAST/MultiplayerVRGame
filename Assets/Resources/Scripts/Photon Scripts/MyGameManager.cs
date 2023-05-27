@@ -159,6 +159,14 @@ namespace Com.MyCompany.MyGame
             PhotonNetwork.LeaveRoom();
         }
 
+        /// <summary>
+        /// loads the waiting room scene
+        /// <summary>
+        public void LoadWaitingRoom()
+        {
+            PhotonNetwork.LoadLevel("Waiting Room");
+        }
+
         public void InstantiatePlayer(){
             // original objects for the new networked objects to replace in the hierarchy 
             GameObject originalLeftHand = GameObject.Find("Left Hand Model");

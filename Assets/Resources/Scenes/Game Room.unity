@@ -7477,7 +7477,13 @@ PrefabInstance:
         type: 3}
       propertyPath: basketballRackPrefab
       value: 
-      objectReference: {fileID: 9199565957696320149, guid: 87701eb5d7168044e8835503367ec1da,
+      objectReference: {fileID: 9199565957696320149, guid: 4737593e3cca3b74894f2c8d2c35b8ef,
+        type: 3}
+    - target: {fileID: 3484657463522392691, guid: d674cb4ee87e4eb499c0710ab4484c57,
+        type: 3}
+      propertyPath: emptyBasketballPrefab
+      value: 
+      objectReference: {fileID: 7241942660758746391, guid: 09b2c0db063bdcd4a9dfe6cd938b86a8,
         type: 3}
     - target: {fileID: 3484657463522392691, guid: d674cb4ee87e4eb499c0710ab4484c57,
         type: 3}
@@ -13003,7 +13009,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1597398705
 GameObject:
@@ -16260,7 +16266,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2061857563
 GameObject:

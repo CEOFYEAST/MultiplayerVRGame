@@ -26,10 +26,12 @@ public static class StaticConstants
     /// <summary>
     /// hashtable keys stored to avoid typos/mis-references
     /// <summary>
+        // game settings
     public const string teamNumberHashmapKey = "TeamNumber";
     public const string warmupLengthKey = "WarmupLength";
     public const string gameLengthKey = "GameLength";
     public const string pointsPerScoreKey = "PointsPerScore";
+        // preferences
     public const string regionPrefKey = "RegionPreference";
     public const string playerNamePrefKey = "PlayerName";
 }

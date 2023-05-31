@@ -282,6 +282,10 @@ public class MyGameManager : MonoBehaviourPunCallbacks
         emptyBasketball.transform.parent = grabbingHandPuppetGeometry.transform;
     }
 
+    public void OnRelease(int releasingHandViewID){
+        
+    }
+
     #endregion
 
     #region Private Methods

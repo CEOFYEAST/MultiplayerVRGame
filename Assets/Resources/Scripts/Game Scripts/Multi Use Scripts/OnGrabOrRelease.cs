@@ -13,8 +13,15 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// <summary>
 public class OnGrabOrRelease : MonoBehaviour
 {
+    #region Private Fields
+
     // gameobject that will be used to send RPC calls over the network
     private GameObject RPCReceiver;
+
+    #endregion
+
+
+    #region MonoBehaviour callbacks
 
     /// <summary>
     /// finds the RPC receiver at start
@@ -27,16 +34,21 @@ public class OnGrabOrRelease : MonoBehaviour
         Debug.Log("RPCReceiver: " + RPCReceiver);
     }
 
+    #endregion
+
+
+    #region Public Methods
+
     /// <summary>
-    /// communicates a grab action over the network 
+    /// communicates the grabbing of a basketball over the network 
     /// sends the photon view of the grabbing hand so it's puppets can be located
     /// <summary>
-    public void OnGrab(){
+    public void CommunicateGrab(){
         // grabs the photon view of the local RPCReceiver
         PhotonView RPCReceiverView = RPCReceiver.GetComponent<PhotonView>();
 
-        // gets the interactor of the hand that grabbed the basketball
-        XRBaseInteractor interactor = gameObject.GetComponent<XRGrabInteractable>().interactorsSelecting[0] as XRBaseInteractor;
+        // gets the interactor of the hand that grabbed the basketball (the interactable)
+        XRBaseInteractor interactor = GetInteractorViaInteractable();
 
         // gets the hand that grabbed the basketball using its interactor
         GameObject grabbingHand = interactor.gameObject;
@@ -49,8 +61,65 @@ public class OnGrabOrRelease : MonoBehaviour
         // - used to locate said hand on the other puppets
         PhotonView grabbingHandView = grabbingHandModel.GetComponent<PhotonView>();
 
-        // calls the OnGrab method in every other game
-        // the Others target makes sure that every receiving player 
+        // calls either the OnGrab method in every other game
+        // the Others target makes sure that every player receives the RPC except the local player 
         RPCReceiverView.RPC("OnGrab", RpcTarget.Others, grabbingHandView.ViewID);
     }
+
+    /// <summary>
+    /// communicates the release of a basketball over the network 
+    /// sends the photon view of the releasing hand so it's puppets can be located
+    /// <summary>
+    public void CommunicateRelease(){
+        // grabs the photon view of the local RPCReceiver
+        PhotonView RPCReceiverView = RPCReceiver.GetComponent<PhotonView>();
+
+        // gets the interactor of the hand that grabbed the basketball (the interactable)
+        XRBaseInteractor interactor = GetInteractorViaInteractable();
+
+        // gets the hand that grabbed the basketball using its interactor
+        GameObject releasingHand = interactor.gameObject;
+
+        // gets the model of the grabbing hand 
+        // - it has the photon view
+        GameObject releasingHandModel = releasingHand.transform.GetChild(2).gameObject;
+
+        // photon view of the grabbing hand
+        // - used to locate said hand on the other puppets
+        PhotonView releasingHandView = releasingHandModel.GetComponent<PhotonView>();
+
+        // calls either the OnGrab method in every other game
+        // the Others target makes sure that every player receives the RPC except the local player 
+        RPCReceiverView.RPC("OnRelease", RpcTarget.Others, releasingHandView.ViewID);
+    }
+
+    #endregion
+
+
+    #region Private Methods
+
+    /// <summary>
+    /// gets an interactor via the interactable its interacting with
+    /// - in this case, the basketball this script is attached to is the interactor
+    /// - a left or right hand is the only possible interactor
+    /// <summary>
+    // https://forum.unity.com/threads/how-can-i-get-the-interactor-gameobject-when-the-interactable-gameable-is-grabbed.1293342/
+    private XRBaseInteractor GetInteractorViaInteractable(){
+        // gets the interactable component of the basketball
+        // - used to get the interactor selecting it
+        var grabInteractable = gameObject.GetComponent<XRGrabInteractable>();
+
+        // makes sure the grab interactable is actually currently selected by an interactor
+        if (grabInteractable.isSelected) {
+            // gets the interactor currently interacting with the interactable
+            var interactor = grabInteractable.firstInteractorSelecting as XRBaseInteractor;
+
+            // returns said interactor
+            return interactor;
+        }
+
+        return null;
+    }
+
+    #endregion
 }

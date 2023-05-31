@@ -37,4 +37,15 @@ public class RPCCalls : MonoBehaviour
         // calls the local OnGrab method
         gameManager.GetComponent<MyGameManager>().OnGrab(grabbingHandViewID);
     }
+
+    /// <summary>
+    /// called when a ball is released by another player
+    /// <summary>
+    [PunRPC]
+    public void OnRelease(int releasingHandViewID){
+        Debug.Log("RPC Method Called");
+
+        // calls the local OnGrab method
+        gameManager.GetComponent<MyGameManager>().OnRelease(releasingHandViewID);
+    }
 }

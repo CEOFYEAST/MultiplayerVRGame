@@ -21,8 +21,11 @@ public class MyGameManager : MonoBehaviourPunCallbacks
     public GameObject usernameDisplayPrefab;
     public GameObject basketballRackPrefab;
         // basketball that only contains the ball's model
-        // - used as a visual prop to reflect the movement of other players' balls
+        // - used to reflect a grab over the network
     public GameObject emptyBasketballPrefab;
+        // basketball that only contains the ball's model plus its rigidbody 
+        // - used to reflect a throw over the network
+    public GameObject emptyBasketballWithRigidbodyPrefab;
     public GameObject RPCReceiverPrefab;
 
     // local rig
@@ -253,7 +256,7 @@ public class MyGameManager : MonoBehaviourPunCallbacks
     /// <summary>
     public void OnGrab(int grabbingHandViewID){
         // gets the view of the grabbing hand's puppet
-        PhotonView grabbingHandView =  PhotonView.Find(grabbingHandViewID);
+        PhotonView grabbingHandView = PhotonView.Find(grabbingHandViewID);
 
         // gets the geometry of the grabbing hand's puppet
         // - the geometry of the hand is the only thing that accurately reflects its position
@@ -276,8 +279,38 @@ public class MyGameManager : MonoBehaviourPunCallbacks
         emptyBasketball.transform.parent = grabbingHandPuppetGeometry.transform;
     }
 
-    public void OnRelease(int releasingHandViewID){
-        
+    public void OnRelease(int releasingHandViewID, Vector3 releasedBasketballVelocity){
+        // gets the view of the grabbing hand's puppet
+        PhotonView releasingHandView = PhotonView.Find(releasingHandViewID);
+
+        // gets the geometry of the grabbing hand's puppet
+        // - the geometry of the hand is the only thing that accurately reflects its position
+        GameObject releasingHandPuppetGeometry = 
+            releasingHandView.gameObject.transform // the hand model
+            .GetChild(0) // the hand geometry container
+            .GetChild(0).gameObject; // the actual hand geometry
+
+        // grabs any pre-existing empty basketballs under the releasing hand's geometry
+        IsBasketball[] emptyBallIdentifiers = releasingHandPuppetGeometry.GetComponentsInChildren<IsBasketball>();
+
+        // deletes any balls in emptyBalls
+        // - used to delete any models representing grabbed balls
+        foreach(IsBasketball emptyBallIdentifier in emptyBallIdentifiers){
+            Destroy(emptyBallIdentifier.gameObject);
+        }
+
+        // gets the position of the geometry
+        // - used to place the empty basketball upon instantiation
+        Vector3 releasingHandPuppetGeometryPosition = releasingHandPuppetGeometry.transform.position;
+
+        // adds to the releasing hand puppet's position to place the ball slightly infront of the hand
+        releasingHandPuppetGeometryPosition.z -= 0.167f;
+
+        // instantiates an empty, un-networked basketball in the scene at the geometry's position
+        GameObject emptyBasketball = Instantiate(emptyBasketballWithRigidbodyPrefab, releasingHandPuppetGeometryPosition, Quaternion.identity);
+
+        // gives the empty basketball the velocity of the released (thrown) basketball
+        emptyBasketball.GetComponent<Rigidbody>().velocity = releasedBasketballVelocity;
     }
 
     #endregion

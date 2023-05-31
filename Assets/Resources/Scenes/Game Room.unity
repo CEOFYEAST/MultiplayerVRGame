@@ -7491,6 +7491,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2595872212440800788, guid: c4aeea046a0f54f4b9f342f3623566d0,
         type: 3}
+    - target: {fileID: 3484657463522392691, guid: d674cb4ee87e4eb499c0710ab4484c57,
+        type: 3}
+      propertyPath: emptyBasketballWithRigidbodyPrefab
+      value: 
+      objectReference: {fileID: 7241942660758746391, guid: cbeef1cf9449c21459af8bfa24f6c780,
+        type: 3}
     - target: {fileID: 4969292960301400303, guid: d674cb4ee87e4eb499c0710ab4484c57,
         type: 3}
       propertyPath: m_RootOrder

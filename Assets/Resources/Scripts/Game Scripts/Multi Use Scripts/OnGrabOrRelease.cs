@@ -18,6 +18,10 @@ public class OnGrabOrRelease : MonoBehaviour
     // gameobject that will be used to send RPC calls over the network
     private GameObject RPCReceiver;
 
+    // view of hand used on last grab
+    // - used to identify releasing hand
+    private PhotonView lastGrabbingHandIdentifier;
+
     #endregion
 
 
@@ -44,6 +48,8 @@ public class OnGrabOrRelease : MonoBehaviour
     /// sends the photon view of the grabbing hand so it's puppets can be located
     /// <summary>
     public void CommunicateGrab(){
+        Debug.Log("Communicating Grab");
+
         // grabs the photon view of the local RPCReceiver
         PhotonView RPCReceiverView = RPCReceiver.GetComponent<PhotonView>();
 
@@ -61,9 +67,13 @@ public class OnGrabOrRelease : MonoBehaviour
         // - used to locate said hand on the other puppets
         PhotonView grabbingHandView = grabbingHandModel.GetComponent<PhotonView>();
 
+        Debug.Log("grabbingHandView" + grabbingHandView);
+
+        lastGrabbingHandIdentifier = grabbingHandView;
+
         // calls either the OnGrab method in every other game
         // the Others target makes sure that every player receives the RPC except the local player 
-        RPCReceiverView.RPC("OnGrab", RpcTarget.Others, grabbingHandView.ViewID);
+        RPCReceiverView.RPC("OnGrab", RpcTarget.All, grabbingHandView.ViewID);
     }
 
     /// <summary>
@@ -71,26 +81,20 @@ public class OnGrabOrRelease : MonoBehaviour
     /// sends the photon view of the releasing hand so it's puppets can be located
     /// <summary>
     public void CommunicateRelease(){
+        Debug.Log("Communicating Release");
+
+        // grabs the rigidbody component of the basketball
+        Rigidbody releasedBasketballRigidbody = gameObject.GetComponent<Rigidbody>();
+
+        // grabs the velocity of the basketball's rigidbody
+        Vector3 releasedBasketballVelocity = releasedBasketballRigidbody.velocity;
+
         // grabs the photon view of the local RPCReceiver
         PhotonView RPCReceiverView = RPCReceiver.GetComponent<PhotonView>();
 
-        // gets the interactor of the hand that grabbed the basketball (the interactable)
-        XRBaseInteractor interactor = GetInteractorViaInteractable();
-
-        // gets the hand that grabbed the basketball using its interactor
-        GameObject releasingHand = interactor.gameObject;
-
-        // gets the model of the grabbing hand 
-        // - it has the photon view
-        GameObject releasingHandModel = releasingHand.transform.GetChild(2).gameObject;
-
-        // photon view of the grabbing hand
-        // - used to locate said hand on the other puppets
-        PhotonView releasingHandView = releasingHandModel.GetComponent<PhotonView>();
-
-        // calls either the OnGrab method in every other game
+        // calls the OnRelease method in every other game
         // the Others target makes sure that every player receives the RPC except the local player 
-        RPCReceiverView.RPC("OnRelease", RpcTarget.Others, releasingHandView.ViewID);
+        RPCReceiverView.RPC("OnRelease", RpcTarget.All, lastGrabbingHandIdentifier.ViewID, releasedBasketballVelocity);
     }
 
     #endregion
@@ -117,6 +121,8 @@ public class OnGrabOrRelease : MonoBehaviour
             // returns said interactor
             return interactor;
         }
+
+        Debug.Log("Interactor is Null");
 
         return null;
     }

@@ -261,19 +261,22 @@ public class MyGameManager : MonoBehaviourPunCallbacks
         // gets the view of the grabbing hand's puppet
         PhotonView grabbingHandView =  PhotonView.Find(grabbingHandViewID);
 
-        // gets the grabbing hand's puppet
-        GameObject grabbingHandPuppet = grabbingHandView.gameObject;
+        // gets the geometry of the grabbing hand's puppet
+        GameObject grabbingHandPuppetGeometry = grabbingHandView.gameObject.transform.GetChild(0).GetChild(0).gameObject;
+
+        Debug.Log("grabbing hand puppet geometry: " + grabbingHandPuppetGeometry);
 
         // gets the position of the grabbing hand's puppet
-        Vector3 grabbingHandPuppetPosition = grabbingHandPuppet.transform.position;
+        Vector3 grabbingHandPuppetGeometryPosition = grabbingHandPuppetGeometry.transform.position;
 
-        grabbingHandPuppetPosition.z -= 0.167f;
+        // adds to the grabbing hand puppet's position to place the ball slightly infront of the hand
+        grabbingHandPuppetGeometryPosition.z -= 0.167f;
 
-        // instantiates an empty, un-networked basketball in the scene
-        GameObject emptyBasketball = Instantiate(emptyBasketballPrefab, grabbingHandPuppetPosition, Quaternion.identity);
+        // instantiates an empty, un-networked basketball in the scene at the puppet's position
+        GameObject emptyBasketball = Instantiate(emptyBasketballPrefab, grabbingHandPuppetGeometryPosition, Quaternion.identity);
 
         // makes the basketball a child of the puppet hand
-        emptyBasketball.transform.parent = grabbingHandPuppet.transform;
+        emptyBasketball.transform.parent = grabbingHandPuppetGeometry.transform;
     }
 
     #endregion

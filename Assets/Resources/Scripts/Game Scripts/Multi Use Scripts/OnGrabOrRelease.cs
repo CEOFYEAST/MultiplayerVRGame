@@ -52,6 +52,6 @@ public class OnGrabOrRelease : MonoBehaviour
 
         Debug.Log("hand view: " + grabbingHandView);
 
-        RPCReceiverView.RPC("OnGrab", RpcTarget.Others, grabbingHandView.ViewID);
+        RPCReceiverView.RPC("OnGrab", RpcTarget.All, grabbingHandView.ViewID);
     }
 }

@@ -28,7 +28,8 @@ public class OnGrabOrRelease : MonoBehaviour
     }
 
     /// <summary>
-    /// communicates a grab action over the network
+    /// communicates a grab action over the network 
+    /// sends the photon view of the grabbing hand so it's puppets can be located
     /// <summary>
     public void OnGrab(){
         // grabs the photon view of the local RPCReceiver
@@ -37,21 +38,19 @@ public class OnGrabOrRelease : MonoBehaviour
         // gets the interactor of the hand that grabbed the basketball
         XRBaseInteractor interactor = gameObject.GetComponent<XRGrabInteractable>().interactorsSelecting[0] as XRBaseInteractor;
 
-        Debug.Log("interactor: " + interactor);
-
         // gets the hand that grabbed the basketball using its interactor
         GameObject grabbingHand = interactor.gameObject;
 
-        Debug.Log("hand: " + grabbingHand);
-
+        // gets the model of the grabbing hand 
+        // - it has the photon view
         GameObject grabbingHandModel = grabbingHand.transform.GetChild(2).gameObject;
 
         // photon view of the grabbing hand
         // - used to locate said hand on the other puppets
         PhotonView grabbingHandView = grabbingHandModel.GetComponent<PhotonView>();
 
-        Debug.Log("hand view: " + grabbingHandView);
-
-        RPCReceiverView.RPC("OnGrab", RpcTarget.All, grabbingHandView.ViewID);
+        // calls the OnGrab method in every other game
+        // the Others target makes sure that every receiving player 
+        RPCReceiverView.RPC("OnGrab", RpcTarget.Others, grabbingHandView.ViewID);
     }
 }

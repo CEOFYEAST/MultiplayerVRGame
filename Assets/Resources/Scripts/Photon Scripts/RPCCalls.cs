@@ -31,12 +31,10 @@ public class RPCCalls : MonoBehaviour
     /// called when a ball is grabbed by another player
     /// <summary>
     [PunRPC]
-    public void OnGrab(PhotonView grabbingHandView){
+    public void OnGrab(int grabbingHandViewID){
         Debug.Log("RPC Method Called");
 
-        if((!(grabbingHandView.IsMine))){
-            // calls the local OnGrab method
-            gameManager.GetComponent<MyGameManager>().OnGrab(grabbingHandView.ViewID);
-        }
+        // calls the local OnGrab method
+        gameManager.GetComponent<MyGameManager>().OnGrab(grabbingHandViewID);
     }
 }

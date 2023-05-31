@@ -1312,6 +1312,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5792917509577498693, guid: 7b1f99240d3b4774291693fdbf65543a,
+        type: 3}
+      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Id
+      value: 6538f693-12cd-4fc5-bf3d-868204f998cc
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792917509577498693, guid: 7b1f99240d3b4774291693fdbf65543a,
+        type: 3}
+      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Name
+      value: Directional Anchor Rotation
+      objectReference: {fileID: 0}
     - target: {fileID: 5792917509577498747, guid: 7b1f99240d3b4774291693fdbf65543a,
         type: 3}
       propertyPath: m_IsActive
@@ -11159,7 +11169,7 @@ PrefabInstance:
     - target: {fileID: 2183919295101783438, guid: 818b6f22ecbea934eaab7cb35781e91e,
         type: 3}
       propertyPath: connectOnStart
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2183919295101783438, guid: 818b6f22ecbea934eaab7cb35781e91e,
         type: 3}

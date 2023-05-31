@@ -264,14 +264,16 @@ public class MyGameManager : MonoBehaviourPunCallbacks
         // gets the grabbing hand's puppet
         GameObject grabbingHandPuppet = grabbingHandView.gameObject;
 
+        // gets the position of the grabbing hand's puppet
+        Vector3 grabbingHandPuppetPosition = grabbingHandPuppet.transform.position;
+
+        grabbingHandPuppetPosition.z -= 0.167f;
+
         // instantiates an empty, un-networked basketball in the scene
-        GameObject emptyBasketball = Instantiate(emptyBasketballPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject emptyBasketball = Instantiate(emptyBasketballPrefab, grabbingHandPuppetPosition, Quaternion.identity);
 
         // makes the basketball a child of the puppet hand
         emptyBasketball.transform.parent = grabbingHandPuppet.transform;
-
-        // changes the basketball's position to be slightly infront of the hand
-        emptyBasketball.transform.position = new Vector3(0, 0, 0.167f);
     }
 
     #endregion

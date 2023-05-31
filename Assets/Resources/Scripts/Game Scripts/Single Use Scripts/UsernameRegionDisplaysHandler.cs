@@ -13,17 +13,11 @@ public class UsernameRegionDisplaysHandler : MonoBehaviour
     public TMPro.TextMeshProUGUI regionDisplayText;
     public TMPro.TextMeshProUGUI usernameDisplayText;
 
-    // stores the region pref key to avoid typos
-    const string regionPrefKey = "RegionPreference";
-
-    // stores the username pref Key to avoid typos
-    const string playerNamePrefKey = "PlayerName";
-
     // Start is called before the first frame update
     void Start()
     {
-        if(PlayerPrefs.HasKey(regionPrefKey)){
-            regionDisplayText.text = GetRegionName(PlayerPrefs.GetString(regionPrefKey));
+        if(PlayerPrefs.HasKey(StaticConstants.regionPrefKey)){
+            regionDisplayText.text = GetRegionName(PlayerPrefs.GetString(StaticConstants.regionPrefKey));
         } else {
             regionDisplayText.text = "Best Region";
         }
@@ -32,15 +26,15 @@ public class UsernameRegionDisplaysHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PlayerPrefs.HasKey(regionPrefKey)){
-            if(GetRegionName(PlayerPrefs.GetString(regionPrefKey)) != regionDisplayText.text){
-                regionDisplayText.text = GetRegionName(PlayerPrefs.GetString(regionPrefKey));
+        if(PlayerPrefs.HasKey(StaticConstants.regionPrefKey)){
+            if(GetRegionName(PlayerPrefs.GetString(StaticConstants.regionPrefKey)) != regionDisplayText.text){
+                regionDisplayText.text = GetRegionName(PlayerPrefs.GetString(StaticConstants.regionPrefKey));
             }
         }
 
-        if(PlayerPrefs.HasKey(playerNamePrefKey)){
-            if(PlayerPrefs.GetString(playerNamePrefKey) != usernameDisplayText.text){
-                usernameDisplayText.text = PlayerPrefs.GetString(playerNamePrefKey);
+        if(PlayerPrefs.HasKey(StaticConstants.playerNamePrefKey)){
+            if(PlayerPrefs.GetString(StaticConstants.playerNamePrefKey) != usernameDisplayText.text){
+                usernameDisplayText.text = PlayerPrefs.GetString(StaticConstants.playerNamePrefKey);
             }
         }
     }

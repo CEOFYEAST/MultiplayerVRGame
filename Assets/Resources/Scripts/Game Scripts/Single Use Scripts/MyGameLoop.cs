@@ -41,17 +41,6 @@ public class MyGameLoop : MonoBehaviour
     #endregion
 
 
-    #region Private Constants
-
-        // hashtable keys stored to avoid typos/mis-references
-        const string teamNumberHashmapKey = "TeamNumber";
-        const string warmupLengthKey = "WarmupLength";
-        const string gameLengthKey = "GameLength";
-        const string pointsPerScoreKey = "PointsPerScore";
-        
-    #endregion
-
-
     #region Unity Monobehaviour Callbacks
 
     // Start is called before the first frame update
@@ -70,11 +59,11 @@ public class MyGameLoop : MonoBehaviour
     /// <summary>
     public void OnScore(Player scorer){
         // gets the team number of the player that made the shot
-        int scorerTeamNumber = (int) scorer.CustomProperties[teamNumberHashmapKey];
+        int scorerTeamNumber = (int) scorer.CustomProperties[StaticConstants.teamNumberHashmapKey];
 
         // updates the proper team score by a fixed amount
         if(teamScores.ContainsKey(scorerTeamNumber)){
-            teamScores[scorerTeamNumber] += (int) PhotonNetwork.CurrentRoom.CustomProperties[pointsPerScoreKey];
+            teamScores[scorerTeamNumber] += (int) PhotonNetwork.CurrentRoom.CustomProperties[StaticConstants.pointsPerScoreKey];
         }
 
         // updates the scoreboards based on the new score
@@ -96,7 +85,7 @@ public class MyGameLoop : MonoBehaviour
         InitializeTeamScoresDictionary();
 
         // starts the timer
-        StartCoroutine(Timer(popupText, "Warmup ending in ", (int) PhotonNetwork.CurrentRoom.CustomProperties[warmupLengthKey], BlockOne));
+        StartCoroutine(Timer(popupText, "Warmup ending in ", (int) PhotonNetwork.CurrentRoom.CustomProperties[StaticConstants.warmupLengthKey], BlockOne));
     }
 
     /// <summary>
@@ -105,7 +94,7 @@ public class MyGameLoop : MonoBehaviour
     private void InitializeTeamScoresDictionary(){
         foreach(Player player in PhotonNetwork.PlayerList){
             // grabs player's team number
-            int playerTeamNumber = (int) player.CustomProperties[teamNumberHashmapKey];
+            int playerTeamNumber = (int) player.CustomProperties[StaticConstants.teamNumberHashmapKey];
 
             // creates pair for player's team if one doesn't exist
             if(!(teamScores.ContainsKey(playerTeamNumber))){
@@ -156,7 +145,7 @@ public class MyGameLoop : MonoBehaviour
         }
         
         // grabs team number of local player
-        int playerTeamNumber = (int) PhotonNetwork.LocalPlayer.CustomProperties[teamNumberHashmapKey];
+        int playerTeamNumber = (int) PhotonNetwork.LocalPlayer.CustomProperties[StaticConstants.teamNumberHashmapKey];
 
         // iterates through team scores and returns neccessary win message
         for(int i = 0; i < teamScores.Count; i++){
@@ -208,10 +197,10 @@ public class MyGameLoop : MonoBehaviour
             // starts game timers
             for(int i = 0; i < timerTexts.Length; i++){
                 if(i != timerTexts.Length - 1){
-                    StartCoroutine(Timer(timerTexts[i], "", (int) PhotonNetwork.CurrentRoom.CustomProperties[gameLengthKey], null));
+                    StartCoroutine(Timer(timerTexts[i], "", (int) PhotonNetwork.CurrentRoom.CustomProperties[StaticConstants.gameLengthKey], null));
                 }
                 else {
-                    StartCoroutine(Timer(timerTexts[i], "", (int) PhotonNetwork.CurrentRoom.CustomProperties[gameLengthKey], BlockTwo));
+                    StartCoroutine(Timer(timerTexts[i], "", (int) PhotonNetwork.CurrentRoom.CustomProperties[StaticConstants.gameLengthKey], BlockTwo));
                 }
             }
         }

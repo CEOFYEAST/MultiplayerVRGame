@@ -12,20 +12,13 @@ public class HideUnusedScoreboards : MonoBehaviour
 {
     private List<int> activeTeamsList = new List<int>();
 
-    #region Private Constants
-
-        // store the team number custom properties key to avoid typos
-        const string teamNumberHashmapKey = "TeamNumber";
-        
-    #endregion
-
     /// <summary>
     /// method that hides all scoreboards that don't correspond to an active team
     /// <summary>
     public void Hide(){
         // adds the numbers of all active teams to a list
         foreach(Player player in PhotonNetwork.PlayerList){
-            int playerTeamNumber = (int) player.CustomProperties[teamNumberHashmapKey];
+            int playerTeamNumber = (int) player.CustomProperties[StaticConstants.teamNumberHashmapKey];
 
             activeTeamsList.Add(playerTeamNumber);
         }

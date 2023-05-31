@@ -44,12 +44,6 @@ namespace Com.MyCompany.MyGame
 
         #endregion
 
-        #region Private Constants
-
-        // Store the PlayerPref Key to avoid typos
-        const string regionPrefKey = "RegionPreference";
-
-        #endregion
 
         #region MonoBehaviour CallBacks
 
@@ -100,10 +94,10 @@ namespace Com.MyCompany.MyGame
                 Debug.Log("connecting to Photon Online Server");
 
                 // overrides best found region if player has a particular region preference set
-                if(PlayerPrefs.HasKey(regionPrefKey)){
+                if(PlayerPrefs.HasKey(StaticConstants.regionPrefKey)){
                     // makes sure region preference isn't best region
-                    if(!(string.Equals(PlayerPrefs.GetString(regionPrefKey), "best"))){
-                        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = PlayerPrefs.GetString(regionPrefKey);
+                    if(!(string.Equals(PlayerPrefs.GetString(StaticConstants.regionPrefKey), "best"))){
+                        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = PlayerPrefs.GetString(StaticConstants.regionPrefKey);
                     }
                 } 
 
@@ -119,7 +113,7 @@ namespace Com.MyCompany.MyGame
         /// <summary>
         public void SetPrefferedRegion(string preference){
             Debug.Log("setting preffered region to: " + preference); 
-            PlayerPrefs.SetString(regionPrefKey,preference);
+            PlayerPrefs.SetString(StaticConstants.regionPrefKey,preference);
         }
 
         #endregion

@@ -93,12 +93,6 @@ public class MyGameManager : MonoBehaviourPunCallbacks
 
     #endregion
 
-    #region Private Constants
-
-        // store the team number custom properties key to avoid typos
-        const string teamNumberHashmapKey = "TeamNumber";
-    
-    #endregion
 
     #region MonoBehaviour callbacks
 
@@ -176,7 +170,7 @@ public class MyGameManager : MonoBehaviourPunCallbacks
         GameObject originalHeadband = GameObject.Find("Headband");
 
         //sets player color based on their position in the playerlist
-        int playerTeamNumber = (int) PhotonNetwork.LocalPlayer.CustomProperties[teamNumberHashmapKey];
+        int playerTeamNumber = (int) PhotonNetwork.LocalPlayer.CustomProperties[StaticConstants.teamNumberHashmapKey];
 
         // sets names of prefabs to be instantiated, accounting for color
         String leftHandPrefabName = "Left Hand Model " + playerTeamNumber + " (networked)";

@@ -21,12 +21,6 @@ namespace Com.MyCompany.MyGame
 
         #endregion
 
-        #region Private Constants
-
-        // Store the PlayerPref Key to avoid typos
-        const string playerNamePrefKey = "PlayerName";
-        
-        #endregion
 
         #region MonoBehaviour CallBacks
 
@@ -38,9 +32,9 @@ namespace Com.MyCompany.MyGame
             string defaultName = "player";
             if (inputText!=null)
             {
-                if (PlayerPrefs.HasKey(playerNamePrefKey))
+                if (PlayerPrefs.HasKey(StaticConstants.playerNamePrefKey))
                 {
-                    defaultName = PlayerPrefs.GetString(playerNamePrefKey);
+                    defaultName = PlayerPrefs.GetString(StaticConstants.playerNamePrefKey);
                     inputText.text = defaultName;
                 } 
             }
@@ -49,7 +43,7 @@ namespace Com.MyCompany.MyGame
 
             PhotonNetwork.NickName =  defaultName;
 
-            PlayerPrefs.SetString(playerNamePrefKey,defaultName);
+            PlayerPrefs.SetString(StaticConstants.playerNamePrefKey,defaultName);
         }
 
         #endregion
@@ -74,7 +68,7 @@ namespace Com.MyCompany.MyGame
 
             Debug.Log("Set To: " + value);
 
-            PlayerPrefs.SetString(playerNamePrefKey,value);
+            PlayerPrefs.SetString(StaticConstants.playerNamePrefKey,value);
         }
 
         #endregion

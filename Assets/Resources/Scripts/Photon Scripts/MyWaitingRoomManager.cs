@@ -23,15 +23,6 @@ namespace Com.MyCompany.MyGame
 
         #endregion
 
-        #region Private Constants
-
-        // hashtable keys stored to avoid typos/mis-references
-        const string teamNumberHashmapKey = "TeamNumber";
-        const string warmupLengthKey = "WarmupLength";
-        const string gameLengthKey = "GameLength";
-        const string pointsPerScoreKey = "PointsPerScore";
-        
-        #endregion
 
         #region MonoBehaviour callbacks
 
@@ -117,18 +108,18 @@ namespace Com.MyCompany.MyGame
         /// - everything after the first digit represents the value to fill the key with
         /// <summary>
         public void UpdateCustomRoomSettings(int updateWith){
-            string fieldToUpdate = warmupLengthKey;
+            string fieldToUpdate = StaticConstants.warmupLengthKey;
 
             // determines the key to update using the first digit of updateWith
             switch(GetFirstDigit(updateWith)){
                 case 1:
-                    fieldToUpdate = warmupLengthKey;
+                    fieldToUpdate = StaticConstants.warmupLengthKey;
                     break;
                 case 2:
-                    fieldToUpdate = gameLengthKey;
+                    fieldToUpdate = StaticConstants.gameLengthKey;
                     break;
                 case 3:
-                    fieldToUpdate = pointsPerScoreKey;
+                    fieldToUpdate = StaticConstants.pointsPerScoreKey;
                     break;
             }
 
@@ -154,7 +145,7 @@ namespace Com.MyCompany.MyGame
             ExitGames.Client.Photon.Hashtable _myCustomProperties = new ExitGames.Client.Photon.Hashtable();
 
             // sets the hashmap (team number) to teamToAssign
-            _myCustomProperties[teamNumberHashmapKey] = teamToAssign;
+            _myCustomProperties[StaticConstants.teamNumberHashmapKey] = teamToAssign;
 
             // updates the player's custom properties locally 
             PhotonNetwork.LocalPlayer.CustomProperties = _myCustomProperties;
@@ -184,7 +175,7 @@ namespace Com.MyCompany.MyGame
             }
 
             // sets the hashmap (team number) to the player's index in PlayerList
-            _myCustomProperties[teamNumberHashmapKey] = playerIndex;
+            _myCustomProperties[StaticConstants.teamNumberHashmapKey] = playerIndex;
 
             // updates the player's custom properties locally 
             PhotonNetwork.LocalPlayer.CustomProperties = _myCustomProperties;
@@ -217,7 +208,7 @@ namespace Com.MyCompany.MyGame
                 chosenImageBackgrounds[i].SetActive(true);
 
                 // grabs team number of player from custom properties
-                int playerTeamNumber = (int) PhotonNetwork.PlayerList[i].CustomProperties[teamNumberHashmapKey];
+                int playerTeamNumber = (int) PhotonNetwork.PlayerList[i].CustomProperties[StaticConstants.teamNumberHashmapKey];
 
                 // grabs team color of player using team number
                 Color32 playerTeamColor = StaticTeamColors.teamColors[playerTeamNumber];

@@ -20,7 +20,6 @@ public static class StaticTeamColors
         {5, new Color32(255, 254, 18, 255)}
     };
     
-
     /**
     public enum TeamColors : Color32
     {

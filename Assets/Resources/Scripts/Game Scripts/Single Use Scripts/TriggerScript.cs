@@ -5,6 +5,10 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
+
+/// <summary>
+/// class designed to communicate a score over the network so other players' scoreboards can be updated properly 
+/// <summary>
 public class TriggerScript : MonoBehaviour
 {
     private GameObject RPCReceiver;
@@ -22,23 +26,17 @@ public class TriggerScript : MonoBehaviour
         // makes sure the calling object is a basketball
         if(other.GetComponent<IsBasketball>() != null)
         {
-            // grabs the photon view of the basketball
-            PhotonView basketballView = other.GetComponent<PhotonView>();
+            // grabs the photon view of the local RPCReceiver
+            PhotonView RPCReceiverView = RPCReceiver.GetComponent<PhotonView>();
 
-            // grabs the owner of the photon view of the basketball
-            Player basketballViewOwner = basketballView.Owner;
+            // grabs the owner of the basketball
+            Player basketballOwner = PhotonNetwork.LocalPlayer;
 
-            // only updates scores if the basketball is mine
-            if(basketballView.IsMine){
-                // grabs the photon view of the local RPCReceiver
-                PhotonView RPCReceiverView = RPCReceiver.GetComponent<PhotonView>();
+            // destroys the scoring basketball so it can only count for one score
+            PhotonNetwork.Destroy(other.gameObject);
 
-                // destroys the scoring basketball so it can only count for one score
-                PhotonNetwork.Destroy(other.gameObject);
-
-                // updates scores/scoreboards over the network
-                RPCReceiverView.RPC("OnScore", RpcTarget.All, basketballViewOwner);
-            }
+            // updates scores/scoreboards over the network
+            RPCReceiverView.RPC("OnScore", RpcTarget.All, basketballOwner);
         }
 
     }

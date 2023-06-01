@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,13 +23,16 @@ public class OnGrabOrRelease : MonoBehaviour
     // - used to identify releasing hand
     private PhotonView lastGrabbingHandIdentifier;
 
+    // rigidbody of the basketball used to detect a throw
+    //private Rigidbody basketballRigidbody;
+
     #endregion
 
 
     #region MonoBehaviour callbacks
 
     /// <summary>
-    /// finds the RPC receiver at start
+    /// finds the RPC receiver and rigid body at start
     /// <summary>
     void Start(){
         Debug.Log("Finding RPCReceiver...");
@@ -36,7 +40,21 @@ public class OnGrabOrRelease : MonoBehaviour
         RPCReceiver = GameObject.Find("RPCReceiver");
 
         Debug.Log("RPCReceiver: " + RPCReceiver);
+
+        //basketballRigidbody = gameObject.GetComponent<Rigidbody>();
     }
+
+    /**
+    /// <summary>
+    /// calls communicate release when a release is detected
+    /// - a release is detected when the rigid body's velocity increases from 0
+    /// <summary>
+    void Update(){
+        if(basketballRigidbody.velocity.x > 0){
+            CommunicateRelease();
+        }
+    }
+    */
 
     #endregion
 
@@ -73,7 +91,7 @@ public class OnGrabOrRelease : MonoBehaviour
 
         // calls either the OnGrab method in every other game
         // the Others target makes sure that every player receives the RPC except the local player 
-        RPCReceiverView.RPC("OnGrab", RpcTarget.All, grabbingHandView.ViewID);
+        RPCReceiverView.RPC("OnGrab", RpcTarget.Others, grabbingHandView.ViewID);
     }
 
     /// <summary>
@@ -83,18 +101,7 @@ public class OnGrabOrRelease : MonoBehaviour
     public void CommunicateRelease(){
         Debug.Log("Communicating Release");
 
-        // grabs the rigidbody component of the basketball
-        Rigidbody releasedBasketballRigidbody = gameObject.GetComponent<Rigidbody>();
-
-        // grabs the velocity of the basketball's rigidbody
-        Vector3 releasedBasketballVelocity = releasedBasketballRigidbody.velocity;
-
-        // grabs the photon view of the local RPCReceiver
-        PhotonView RPCReceiverView = RPCReceiver.GetComponent<PhotonView>();
-
-        // calls the OnRelease method in every other game
-        // the Others target makes sure that every player receives the RPC except the local player 
-        RPCReceiverView.RPC("OnRelease", RpcTarget.All, lastGrabbingHandIdentifier.ViewID, releasedBasketballVelocity);
+        StartCoroutine(WaitAfterRelease());
     }
 
     #endregion
@@ -125,6 +132,43 @@ public class OnGrabOrRelease : MonoBehaviour
         Debug.Log("Interactor is Null");
 
         return null;
+    }
+
+    #endregion
+
+
+    #region Private Inumerators
+
+    private IEnumerator WaitAfterRelease(){
+        // waits for one frame
+        yield return 0;
+
+        // grabs the rigidbody component of the basketball
+        Rigidbody releasedBasketballRigidbody = gameObject.GetComponent<Rigidbody>();
+
+        // grabs the velocity of the basketball's rigidbody
+        Vector3 releasedBasketballVelocity = releasedBasketballRigidbody.velocity;
+
+        // grabs the angular velocity of the basketball's rigidbody
+        Vector3 releasedBasketballAngularVelocity = releasedBasketballRigidbody.angularVelocity;
+
+        // grabs the position of the basketball
+        Vector3 releasedBasketballPosition = gameObject.transform.position;
+
+        Debug.Log("releasedBasketballVelocity: " + releasedBasketballVelocity);
+
+        // grabs the photon view of the local RPCReceiver
+        PhotonView RPCReceiverView = RPCReceiver.GetComponent<PhotonView>();
+
+        // calls the OnRelease method in every other game
+        // the Others target makes sure that every player receives the RPC except the local player 
+        RPCReceiverView.RPC(
+            "OnRelease", 
+            RpcTarget.Others, 
+            lastGrabbingHandIdentifier.ViewID, 
+            releasedBasketballVelocity, 
+            releasedBasketballAngularVelocity, 
+            releasedBasketballPosition);
     }
 
     #endregion

@@ -279,7 +279,14 @@ public class MyGameManager : MonoBehaviourPunCallbacks
         emptyBasketball.transform.parent = grabbingHandPuppetGeometry.transform;
     }
 
-    public void OnRelease(int releasingHandViewID, Vector3 releasedBasketballVelocity){
+    /// <summary>
+    /// similar to OnGrab, but for when the basketball is thrown
+    /// <summary>
+    public void OnRelease(int releasingHandViewID, 
+        Vector3 releasedBasketballVelocity, 
+        Vector3 releasedBasketballAngularVelocity, 
+        Vector3 releasedBasketballPosition){
+            
         // gets the view of the grabbing hand's puppet
         PhotonView releasingHandView = PhotonView.Find(releasingHandViewID);
 
@@ -299,18 +306,14 @@ public class MyGameManager : MonoBehaviourPunCallbacks
             Destroy(emptyBallIdentifier.gameObject);
         }
 
-        // gets the position of the geometry
-        // - used to place the empty basketball upon instantiation
-        Vector3 releasingHandPuppetGeometryPosition = releasingHandPuppetGeometry.transform.position;
-
-        // adds to the releasing hand puppet's position to place the ball slightly infront of the hand
-        releasingHandPuppetGeometryPosition.z -= 0.167f;
-
         // instantiates an empty, un-networked basketball in the scene at the geometry's position
-        GameObject emptyBasketball = Instantiate(emptyBasketballWithRigidbodyPrefab, releasingHandPuppetGeometryPosition, Quaternion.identity);
+        GameObject emptyBasketball = Instantiate(emptyBasketballWithRigidbodyPrefab, releasedBasketballPosition, Quaternion.identity);
 
         // gives the empty basketball the velocity of the released (thrown) basketball
         emptyBasketball.GetComponent<Rigidbody>().velocity = releasedBasketballVelocity;
+
+        // gives the empty basketball the velocity of the released (thrown) basketball
+        emptyBasketball.GetComponent<Rigidbody>().angularVelocity = releasedBasketballAngularVelocity;
     }
 
     #endregion

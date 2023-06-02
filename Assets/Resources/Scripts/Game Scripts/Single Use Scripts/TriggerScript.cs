@@ -33,7 +33,7 @@ public class TriggerScript : MonoBehaviour
             Player basketballOwner = PhotonNetwork.LocalPlayer;
 
             // destroys the scoring basketball so it can only count for one score
-            PhotonNetwork.Destroy(other.gameObject);
+            Destroy(other.gameObject);
 
             // updates scores/scoreboards over the network
             RPCReceiverView.RPC("OnScore", RpcTarget.All, basketballOwner);

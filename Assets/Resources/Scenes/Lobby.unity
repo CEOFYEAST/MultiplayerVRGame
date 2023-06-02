@@ -11168,8 +11168,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2183919295101783438, guid: 818b6f22ecbea934eaab7cb35781e91e,
         type: 3}
-      propertyPath: connectOnStart
+      propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2183919295101783438, guid: 818b6f22ecbea934eaab7cb35781e91e,
+        type: 3}
+      propertyPath: connectOnStart
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2183919295101783438, guid: 818b6f22ecbea934eaab7cb35781e91e,
         type: 3}

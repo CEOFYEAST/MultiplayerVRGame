@@ -85,7 +85,7 @@ public class MyGameLoop : MonoBehaviour
         InitializeTeamScoresDictionary();
 
         // starts the timer
-        StartCoroutine(Timer(popupText, "Team with the highest score wins. Warmup ending in ", (int) PhotonNetwork.CurrentRoom.CustomProperties[StaticConstants.warmupLengthKey], BlockOne));
+        StartCoroutine(Timer(popupText, "Warmup ending in ", (int) PhotonNetwork.CurrentRoom.CustomProperties[StaticConstants.warmupLengthKey], BlockOne));
     }
 
     /// <summary>

@@ -8,6 +8,6 @@ Steps to Run
 	- open project using unity install above 
 	- open correct scene in project via Assets > Show in Explorer > single player club fair project unity
 	
-You can also just use the latest build linked below. It might not be up to date, however. 
+You can also just use the latest build linked below. It might not be up to date, however. You don't need unity to run it, but you'll still need the oculus app. 
 https://drive.google.com/drive/folders/1NWLn-eR8zCLcSEeMkAU5-bM75qgvCIih?usp=sharing
 

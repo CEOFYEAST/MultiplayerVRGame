@@ -76,14 +76,22 @@ public class MyGameLoop : MonoBehaviour
     #region Private Methods
 
     private void StartGameLoop(){
-        // hides unused team scoreboards
-        foreach(GameObject scoreboardContent in contentDisplays){
-            scoreboardContent.GetComponent<HideUnusedScoreboards>().Hide();
+        // try-catch block to prevent gameloop crash
+        try 
+        {
+
+            // hides unused team scoreboards
+            foreach(GameObject scoreboardContent in contentDisplays){
+                scoreboardContent.GetComponent<HideUnusedScoreboards>().Hide();
+            }
+
+            // fills team scores dictionary with key (team number) - value (team score) pairs
+            InitializeTeamScoresDictionary();
+
+        } catch(Exception e){
+            Debug.Log("Start Gameloop Produced: " + e);
         }
-
-        // fills team scores dictionary with key (team number) - value (team score) pairs
-        InitializeTeamScoresDictionary();
-
+        
         // starts the timer
         StartCoroutine(Timer(popupText, "Warmup ending in ", (int) PhotonNetwork.CurrentRoom.CustomProperties[StaticConstants.warmupLengthKey], BlockOne));
     }
@@ -188,11 +196,18 @@ public class MyGameLoop : MonoBehaviour
         /// is the main body of the game
         /// <summary>
         private void BlockOne(){
-            // disables popup text for the time being
-            popupText.gameObject.SetActive(false);
+            // try-catch block to prevent gameloop crash
+            try 
+            {
+                // disables popup text for the time being
+                popupText.gameObject.SetActive(false);
 
-            // allows players to score 
-            scoreTrigger.SetActive(true);
+                // allows players to score 
+                scoreTrigger.SetActive(true);
+
+            } catch(Exception e){
+                Debug.Log("Block One Produced: " + e);
+            }
 
             // starts game timers
             for(int i = 0; i < timerTexts.Length; i++){
@@ -209,22 +224,30 @@ public class MyGameLoop : MonoBehaviour
         /// contains the "end" of the game, occurs when game timer ends
         /// <summary>
         private void BlockTwo(){
-            Debug.Log("Called Block Two");
+            // try-catch block to prevent gameloop crash
+            try 
+            {
 
-            // prevents players from scoring because the game is over
-            scoreTrigger.SetActive(false);
+                Debug.Log("Called Block Two");
 
-            // fills popupText.text to display the local player's win status
-            popupText.text = GetWinStatusMessage();
+                // prevents players from scoring because the game is over
+                scoreTrigger.SetActive(false);
 
-            // re-activates the popup in order to tell the player if they won or not
-            popupText.gameObject.SetActive(true);
+                // fills popupText.text to display the local player's win status
+                popupText.text = GetWinStatusMessage();
 
-            // destroys all racks to prevent new basketballs from spawning
-            DisableGameObjectsWithTag("Rack");
+                // re-activates the popup in order to tell the player if they won or not
+                popupText.gameObject.SetActive(true);
 
-            // destroys all basketballs
-            DisableGameObjectsWithTag("Basketball");
+                // destroys all racks to prevent new basketballs from spawning
+                DisableGameObjectsWithTag("Rack");
+
+                // destroys all basketballs
+                DisableGameObjectsWithTag("Basketball");
+
+            } catch(Exception e){
+                Debug.Log("Block Two Produced: " + e);
+            }
         }
 
         #endregion

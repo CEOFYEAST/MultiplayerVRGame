@@ -263,8 +263,16 @@ namespace Com.MyCompany.MyGame
         private IEnumerator Timer(){
             yield return new WaitForSeconds(.5f);
 
-            UpdatePlayerFields(masterImageBackgrounds);
-            UpdatePlayerFields(nonMasterImageBackgrounds);
+            try 
+            {
+
+                UpdatePlayerFields(masterImageBackgrounds);
+                UpdatePlayerFields(nonMasterImageBackgrounds);
+                
+            } catch(Exception e){
+                Debug.Log(e);
+            }
+            
         }
 
         #endregion
